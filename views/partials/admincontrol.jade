@@ -1,0 +1,29 @@
+// Created by AlWilliam on 7/18/2015.
+div(ng-controller="AdminCtrl as adminctrl")
+   .row(ng-repeat="user in adminctrl.slidegroup")
+      .col-lg-12
+         .panel.panel-default
+            .panel-heading
+               | +
+               .col-lg-3
+                  b {{user.name}}
+               .col-lg-3.col-lg-offset-5.btn-group(role="group")
+                  button.btn.btn-default(type="button" ng-click="")
+                     span.glyphicon.glyphicon-arrow-up
+                  button.btn.btn-default(type="button" ng-click="")
+                     span.glyphicon.glyphicon-arrow-down
+            .panel-body
+               table.table
+                  thead
+                     tr(style="background-color:#3498db; color: #fff")
+                        th.col-sm-2 Type
+                        th.col-sm-3 File
+                        th.col-sm-3 Duration
+                        th.col-sm-4 Transition
+                  tbody
+                     tr(ng-repeat="file in user.files" ng-class="{'grayed': file.hidden}")
+                        //Standard rows
+                        td {{file.type}}
+                        td {{file.name}}
+                        td {{file.duration}} seconds
+                        td {{file.transition}} {{file.transitionTime}} seconds

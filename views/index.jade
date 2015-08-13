@@ -1,0 +1,48 @@
+extends layout
+
+block body
+   .container
+      .navbar.navbar-default(role="navigation")
+         .navbar-header
+            button.navbar-toggle(type="button", data-toggle="collapse", data-target=".navbar-ex1-collapse")
+               span.sr-only Toggle navigation
+               span.icon-bar
+               span.icon-bar
+               span.icon-bar
+            a.navbar-brand(href="#") Brand
+         .collapse.navbar-collapse.navbar-ex1-collapse
+            ul.nav.navbar-nav
+               li
+                  a(href="view1") View1
+               li
+                  a(href="view2") View2
+               li
+                  a(href="cc") Content Control
+               li
+                  a(href="admin") Admin Panel
+      div(ng-controller="AppCtrl as app")
+         .jumbotron(style="background-color:#3498db; color: #fff")
+             h3 JSON WORKS: {{app.name}}
+         div(ng-view)
+             span(app-version)
+   footer(clas="footer")
+      .container
+         hr
+         .col-lg-6
+            div Rasmus Saks & Al William Tammsaar
+         .col-lg-6(class="text-right")
+            div
+               a Source code
+               |  
+               | released under MIT License
+
+
+   script(src='javascripts/lib/angular/angular.js')
+   script(src='javascripts/lib/angular/angular-route.js')
+   script(src='javascripts/app.js')
+   script(src='javascripts/services.js')
+   script(src='javascripts/controllers.js')
+   script(src='javascripts/filters.js')
+   script(src='javascripts/directives.js')
+   script(src='javascripts/lib/jquery/jquery-2.1.3.min.js')
+   script(src='bootstrap/js/bootstrap.js')
