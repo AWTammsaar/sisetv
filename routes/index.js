@@ -3,14 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('login', {error: req.flash('error')});
 });
 
-router.get('/', function(req, res){
-  res.render('index',{
-    pretty: true
-  });
-});
 
 router.get('/app/:page', function (req, res, next) {
   res.render('index', {title: req.page});
