@@ -6,19 +6,19 @@
 (function() {
     var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives','ngRoute']);
     app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-        $routeProvider.when('/view1', {
-            templateUrl: '/view1',
+        $routeProvider.when('/app/view1', {
+            templateUrl: 'partials/view1',
             controller: MyCtrl1});
-        $routeProvider.when('/view2', {
-            templateUrl: '/view2',
+        $routeProvider.when('/app/view2', {
+            templateUrl: 'partials/view2',
             controller: MyCtrl2});
-        $routeProvider.when('/admin', {
-            templateUrl: '/admin',
+        $routeProvider.when('/app/admin', {
+            templateUrl: 'partials/admin',
             controller: MyCtrl2});
-        $routeProvider.when('/cc', {
-            templateUrl: '/cc',
+        $routeProvider.when('/app/cc', {
+            templateUrl: 'partials/cc',
             controller: MyCtrl2});
-        $routeProvider.otherwise({redirectTo: '/view1'});
+        $routeProvider.otherwise({redirectTo: '/app/cc'});
         $locationProvider.html5Mode(true);
     }]);
     app.controller("AppCtrl",function AppCtrl($scope, $http) {
