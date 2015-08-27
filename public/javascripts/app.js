@@ -129,6 +129,14 @@
     app.controller("AdminCtrl",function AdminCtrl($scope, $http) {
         //operation initiated when controller is constructed
         var adminctrl = this;
+        adminctrl.toggled={};
+        adminctrl.toggle = function(target){
+            if(adminctrl.toggled[target]){
+                adminctrl.toggled[target] = false;
+            } else {
+                adminctrl.toggled[target] = true;
+            }
+        };
         /**$http({method: 'GET', url: '/api/name'}).
             success(function(data, status, headers, config) {
                 appctrl.name = data.name;

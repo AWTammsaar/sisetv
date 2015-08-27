@@ -3,21 +3,19 @@ div(ng-controller="AdminCtrl as adminctrl")
    .row(ng-repeat="user in adminctrl.slidegroup")
       .col-lg-12
          .panel.panel-default
-            .panel-heading
+            .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.name)")
                b {{user.name}}
                //.col-lg-3.col-lg-offset-5.btn-group(role="group")
                   button.btn.btn-default(type="button" ng-click="")
                      span.glyphicon.glyphicon-arrow-up
                   button.btn.btn-default(type="button" ng-click="")
                      span.glyphicon.glyphicon-arrow-down
-            .panel-body
-               br
-               | Some collection of tools about the user in question
-               br
-               br
-               table.table
+            .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.name]")
+               .user-panel-content
+                  | Some collection of tools about the user in question
+               table.table.table-striped.table-responsive.screen-table
                   thead
-                     tr(style="background-color:#3498db; color: #fff")
+                     tr.table-title
                         th.col-sm-1 Type
                         th.col-sm-3 File
                         th.col-sm-3 Duration
