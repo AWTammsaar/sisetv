@@ -15,8 +15,6 @@ var exp = {
       if (err || !users) return cb(null);
       for (var i = 0; i < users.length; i++) {
         var user = users[i];
-        console.log(password);
-        console.log(user.password);
         if (user.username === username && (!password || bcrypt.compareSync(password, user.password))) return cb(user);
       }
       return cb(null);
