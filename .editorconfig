@@ -4,7 +4,7 @@ root = true
 charset = utf-8
 end_of_line = crlf
 
-[{routes,views}/**.{js, jade}]
+[{routes,views,public}/**.{js, jade, css}]
 indent_style = space
 indent_size = 2
 insert_final_newline = true
