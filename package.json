@@ -20,6 +20,7 @@
     "node-persist": "0.0.6",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "session-file-store": "0.0.18"
   }
 }

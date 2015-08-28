@@ -9,6 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var storage = require('node-persist');
 var flash = require('connect-flash');
 var session = require('express-session');
+var FileStore = require('session-file-store')(session);
 storage.initSync();
 
 
@@ -51,7 +52,8 @@ app.use(flash());
 app.use(session({
   saveUninitialized: true,
   resave: true,
-  secret: 'keyboard dog'
+  secret: 'keyboard dog',
+  store: new FileStore()
 }));
 app.use(passport.initialize());
 app.use(passport.session());
