@@ -4,7 +4,7 @@ var passport = require('passport');
 var router = express.Router();
 
 router.post('/login', passport.authenticate('local', {
-  successRedirect: '/admin',
+  successRedirect: '/app',
   failureRedirect: '/',
   failureFlash: 'Invalid username or password!'
 }));
