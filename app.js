@@ -11,9 +11,6 @@ var flash = require('connect-flash');
 var session = require('express-session');
 storage.initSync();
 
-if (!storage.getItem('users')) {
-
-}
 
 var routes = require('./routes/index');
 var apiRoute = require('./routes/api');
@@ -29,6 +26,16 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+passport.serializeUser(function (user, done) {
+  done(null, user.username);
+});
+
+passport.deserializeUser(function (user, done) {
+  users.getUser(user, function (user) {
+    done(null, user);
+  })
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
