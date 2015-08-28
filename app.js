@@ -9,11 +9,9 @@ var LocalStrategy = require('passport-local').Strategy;
 var storage = require('node-persist');
 var flash = require('connect-flash');
 var session = require('express-session');
+var FileStore = require('session-file-store')(session);
 storage.initSync();
 
-if (!storage.getItem('users')) {
-
-}
 
 var routes = require('./routes/index');
 var apiRoute = require('./routes/api');
@@ -30,6 +28,16 @@ passport.use(new LocalStrategy(
   }
 ));
 
+passport.serializeUser(function (user, done) {
+  done(null, user.username);
+});
+
+passport.deserializeUser(function (user, done) {
+  users.getUser(user, function (user) {
+    done(null, user);
+  })
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -44,7 +52,8 @@ app.use(flash());
 app.use(session({
   saveUninitialized: true,
   resave: true,
-  secret: 'keyboard dog'
+  secret: 'keyboard dog',
+  store: new FileStore()
 }));
 app.use(passport.initialize());
 app.use(passport.session());

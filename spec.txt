@@ -1,0 +1,6 @@
+user:
+    username - Also the unique identifier
+    password - Hashed
+    needsReset - Password needs to be reset
+    slides - All slides
+    admin - Is user an admin?

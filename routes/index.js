@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.get('/app/:page', function (req, res, next) {
+router.get('/app/:page?', function (req, res, next) {
   res.render('index', {title: req.page});
 });
 
