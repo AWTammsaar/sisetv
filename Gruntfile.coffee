@@ -3,7 +3,7 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON "package.json"
     clean:
       main:
-        ["dist/{/,routes/,bin/}*.js"]
+        ["dist/{/,routes/,bin/}*{.js,.js.map}"]
     coffee:
       main:
         files: [
@@ -12,17 +12,20 @@ module.exports = (grunt) ->
           dest: "dist/",
           ext: ".js"
         ]
+        options:
+          sourceMap: true
+          sourceMapDir: "dist/sourcemap"
     copy:
       main:
         files: [
           expand: true,
-          src: ["public/**", "views/**", "node/**", "START.cmd", "INSTALL.cmd"],
+          src: ["public/**", "views/**", "node/**", "START.cmd", "INSTALL.cmd", "package.json"],
           dest: "dist/"
         ]
       fast:
         files: [
           expand: true,
-          src: ["public/**", "views/**", "START.cmd", "INSTALL.cmd"],
+          src: ["public/**", "views/**", "START.cmd", "INSTALL.cmd", "package.json"],
           dest: "dist/"
         ]
 
