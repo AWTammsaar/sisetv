@@ -2,13 +2,13 @@ express = require 'express'
 router = express.Router()
 
 router.get '/', (req, res) ->
-  res.render 'login', error: req.flash 'error'
+  if req.user
+    res.redirect '/app/cc'
+  else
+    res.render 'login', error: req.flash 'error'
 
 router.get '/app/:page?', (req, res) ->
   res.render 'index', title: req.page
-
-router.get "/api/name", (req, res) ->
-  res.json name: 'YEP'
 
 router.get "/partials/view1", (req, res) ->
   res.render 'partials/partial1', pretty: true
