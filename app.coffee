@@ -84,6 +84,3 @@ app.use (err, req, res) ->
     error: {}
 
 module.exports = app
-chalk = require 'chalk'
-console.log chalk.cyan 'SiseTV is now running'
-console.log chalk.cyan "Visit #{chalk.magenta 'http://localhost'} to see it"

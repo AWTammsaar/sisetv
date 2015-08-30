@@ -3,10 +3,11 @@
 ###
   Module dependencies.
 ###
-
+require('source-map-support').install()
 app = require '../app'
 debug = require('debug')('sisetv:server')
 http = require 'http'
+chalk = require 'chalk'
 
 ###
     Normalize a port into a number, string, or false.
@@ -40,10 +41,10 @@ onError = (error) ->
     throw error;
   switch error.code
     when 'EACCES'
-      console.error "#{bind} requires elevated privileges"
+      console.error chalk.red "#{bind} requires elevated privileges"
       process.exit 1
     when 'EADDRINUSE'
-      console.error "#{bind} is already in use"
+      console.error chalk.red "#{bind} is already in use"
       process.exit 1
     else
       throw error
@@ -67,7 +68,8 @@ server.on 'listening', onListening
 
 bind = if typeof port == 'string' then "Pipe #{port}" else "Port #{port}"
 
-# handle specific listen errors with friendly messages
+console.log chalk.cyan 'SiseTV is now running'
+console.log chalk.cyan "Visit #{chalk.magenta 'http://localhost:' + app.get 'port'} to see it"
 
 
 
