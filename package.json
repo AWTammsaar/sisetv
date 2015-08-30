@@ -22,5 +22,9 @@
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
     "session-file-store": "0.0.18"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.13.0"
   }
 }
