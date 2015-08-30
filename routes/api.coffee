@@ -14,7 +14,10 @@ router.get "/getUser", (req, res) ->
   res.json _.omit req.user, 'password'
 
 router.get '/name', (req, res) ->
-  res.json name: req.user.username
+  res.json data: req.user.username
+
+router.get '/files', (req, res) ->
+  res.json data: req.user.slides
 
 router.use (req, res, next) ->
   if !req.user.admin

@@ -26,7 +26,7 @@
         var appctrl = this;
         $http({method: 'GET', url: '/api/name'}).
             success(function(data, status, headers, config) {
-                appctrl.name = data.name;
+              appctrl.name = data.data;
             }).
             error(function(data, status, headers, config) {
                 appctrl.name = 'Error!'
@@ -110,9 +110,9 @@
                 this.files[i].id=i;
             }
         };
-        /**$http({method: 'GET', url: '/api/files'}).
+        $http({method: 'GET', url: '/api/files'}).
          success(function(data, status, headers, config) {
-                contentCtrl.files = data.files;
+              contentCtrl.files = data.data;
             }).
          error(function(data, status, headers, config) {
                 contentCtrl.files = {
@@ -123,7 +123,7 @@
                     transitionTime: 0
                 };
             });
-         */
+
     });
 
     app.controller("AdminCtrl",function AdminCtrl($scope, $http) {
