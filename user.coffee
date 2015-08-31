@@ -14,6 +14,6 @@ class User
     }, data)
 
   toJSON: ->
-    @data.toJSON
+    @data
 
 module.exports = User

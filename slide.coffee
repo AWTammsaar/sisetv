@@ -12,6 +12,6 @@ class Slide
     }, data)
 
   toJSON: ->
-    @data.toJSON()
+    @data
 
 module.exports = Slide

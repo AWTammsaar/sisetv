@@ -23,6 +23,9 @@ exp =
     users.push user
     this.save -> cb users
 
+  getUsers: ->
+    return users
+
   save: (cb) ->
     storage.setItem 'users', users, cb
 
