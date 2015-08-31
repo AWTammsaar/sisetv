@@ -13,7 +13,7 @@ exp =
       password = null
     return cb null if !users
     for user in users
-      return cb user if user.username == username and (!password or bcrypt.compareSync password, user.password)
+      return cb user if user.data.username == username and (!password or bcrypt.compareSync password, user.data.password)
     return cb null
 
   createUser: (options, cb) ->
