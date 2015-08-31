@@ -25,7 +25,7 @@ passport.use new LocalStrategy (username, password, done) ->
     done null, user || false
 
 passport.serializeUser (user, done) ->
-  done null, user.username
+  done null, user.data.username
 
 passport.deserializeUser (user, done) ->
   users.getUser user, (user) ->
