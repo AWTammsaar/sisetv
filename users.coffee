@@ -11,12 +11,10 @@ exp =
     if !cb and password
       cb = password
       password = null
-    storage.getItem 'users', (err, users) =>
-      this.users = users
-      return cb null if err or !users
-      for user in users
-        return cb user if user.username == username and (!password or bcrypt.compareSync password, user.password)
-      return cb null
+    return cb null if !users
+    for user in users
+      return cb user if user.username == username and (!password or bcrypt.compareSync password, user.password)
+    return cb null
 
   createUser: (options, cb) ->
     options.password = bcrypt.hashSync options.password
