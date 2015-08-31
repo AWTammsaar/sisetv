@@ -26,6 +26,9 @@ exp =
   getUsers: ->
     return users
 
+  setUsers: (u) ->
+    users = u
+
   save: (cb) ->
     storage.setItem 'users', users, cb
 

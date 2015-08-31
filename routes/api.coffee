@@ -18,12 +18,6 @@ router.use (req, res, next) ->
 router.get "/getUser", (req, res) ->
   res.respond _.omit req.user, 'password'
 
-router.get '/getName', (req, res) ->
-  res.respond req.user.username
-
-router.get '/getSlides', (req, res) ->
-  res.respond req.user.slides
-
 router.post '/setSlides', (req, res) ->
   req.user.slides = req.body.slides
   res.respond req.user.slides
@@ -36,6 +30,10 @@ router.use (req, res, next) ->
     next()
 
 router.get '/getUsers', (req, res) ->
-  res.respond users.getUsers()
+  res.respond users.getUsers().map (u) -> _.omit u, 'password'
+
+router.post '/setUsers', (req, res) ->
+  users.setUsers(req.body.users)
+  res.respond users.getUsers().map (u) -> _.omit u, 'password'
 
 module.exports = router
