@@ -2,6 +2,7 @@ express = require 'express'
 router = express.Router()
 passport = require 'passport'
 _ = require 'lodash'
+users = require '../users'
 
 router.use (req, res, next) ->
   if !req.user
@@ -9,15 +10,23 @@ router.use (req, res, next) ->
     res.redirect "/"
   else
     next()
+router.use (req, res, next) ->
+  res.respond = (data) ->
+    res.json data: data
+  next()
 
 router.get "/getUser", (req, res) ->
-  res.json _.omit req.user, 'password'
+  res.respond _.omit req.user, 'password'
 
-router.get '/name', (req, res) ->
-  res.json data: req.user.username
+router.get '/getName', (req, res) ->
+  res.respond req.user.username
 
-router.get '/files', (req, res) ->
-  res.json data: req.user.slides
+router.get '/getSlides', (req, res) ->
+  res.respond req.user.slides
+
+router.post '/setSlides', (req, res) ->
+  req.user.slides = req.body.slides
+  res.respond req.user.slides
 
 router.use (req, res, next) ->
   if !req.user.admin
@@ -25,5 +34,8 @@ router.use (req, res, next) ->
     res.redirect "/app/index"
   else
     next()
+
+router.get '/getUsers', (req, res) ->
+  res.respond users.getUsers()
 
 module.exports = router
