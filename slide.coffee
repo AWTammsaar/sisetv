@@ -6,8 +6,7 @@ class Slide
       type: null
       name: null
       duration: 10
-      transition: "none"
-      transitionTime: 0.3
+      file: {}
       hidden: false
     }, data)
 
