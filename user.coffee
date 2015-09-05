@@ -4,11 +4,14 @@ path = require 'path'
 fs = require 'fs'
 uploadDir = path.resolve path.join __dirname, 'public/content'
 fs.mkdirSync uploadDir if not fs.existsSync uploadDir
+defaults = _.partialRight _.assign, (value, other) ->
+  if _.isUndefined(value) then other else value
+
 class User
   constructor: (data) ->
     if data.slides?
       data.slides = data.slides.map (s) -> new Slide s
-    @data = _.defaults({
+    @data = defaults({
       username: null
       password: null
       slides: []
