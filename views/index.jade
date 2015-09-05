@@ -13,13 +13,13 @@ block body
          .collapse.navbar-collapse.navbar-ex1-collapse
             ul.nav.navbar-nav
                li
-                  a(href="/app/view1") View1
+                  a(href="/admin/view1") View1
                li
-                  a(href="/app/view2") View2
+                  a(href="/admin/view2") View2
                li
-                  a(href="/app/cc") Content Control
+                  a(href="/admin/cc") Content Control
                li
-                  a(href="/app/admin") Admin Panel
+                  a(href="/admin/admin") Admin Panel
       div(ng-controller="AppCtrl as app")
          .jumbotron(style="background-color:#3498db; color: #fff")
              h3 JSON WORKS: {{app.name}}
@@ -32,17 +32,17 @@ block body
             div Rasmus Saks & Al William Tammsaar
          .col-lg-6(class="text-right")
             div
-               a Source code
+               a(href="https://github.com/Rezonation/sisetv") Source code
                |  
                | released under MIT License
 
 
-   script(src='javascripts/lib/angular/angular.js')
-   script(src='javascripts/lib/angular/angular-route.js')
-   script(src='javascripts/app.js')
-   script(src='javascripts/services.js')
-   script(src='javascripts/controllers.js')
-   script(src='javascripts/filters.js')
-   script(src='javascripts/directives.js')
-   script(src='javascripts/lib/jquery/jquery-2.1.3.min.js')
+   script(src='js/lib/angular/angular.js')
+   script(src='js/lib/angular/angular-route.js')
+   script(src='js/app.js')
+   script(src='js/services.js')
+   script(src='js/controllers.js')
+   script(src='js/filters.js')
+   script(src='js/directives.js')
+   script(src='js/lib/jquery/jquery-2.1.3.min.js')
    script(src='bootstrap/js/bootstrap.js')

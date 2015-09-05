@@ -1,0 +1,52 @@
+/* app css stylesheet */
+
+body {
+    padding-top:20px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.grayed{
+    background-color: #657b81 !important;
+    color: #eaeaf7 !important;
+}
+.table-striped > tbody > tr:nth-child(odd).grayed > td {
+    background-color: #657b81 !important;
+    color: #eaeaf7 !important;
+}
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+.screen-table{
+    margin: 0;
+}
+.table-title {
+    background-color:#3498db;
+    color: #fff;
+}
+.user-panel-hidden{
+    cursor: pointer;
+}
+.user-panel-body{
+    padding: 0;
+}
+.user-panel-content{
+    margin: 15px;
+}

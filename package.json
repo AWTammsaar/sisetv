@@ -17,10 +17,20 @@
     "jade": "~1.11.0",
     "lodash": "^3.10.1",
     "morgan": "~1.6.1",
+    "multer": "^1.0.3",
     "node-persist": "0.0.6",
+    "nodemon": "^1.4.1",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
-    "session-file-store": "0.0.18"
+    "session-file-store": "0.0.18",
+    "source-map-support": "^0.3.2"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-copy": "^0.8.1",
+    "grunt-sync": "^0.3.0"
   }
 }
