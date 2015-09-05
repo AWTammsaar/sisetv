@@ -34,7 +34,7 @@ router.post '/setSlides', (req, res) ->
 router.use (req, res, next) ->
   if !req.user.admin
     req.flash "error", "You need to be an admin to perform this action!"
-    res.redirect "/app/index"
+    res.redirect "/admin/index"
   else
     next()
 
