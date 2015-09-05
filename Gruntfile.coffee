@@ -3,7 +3,9 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON "package.json"
     clean:
       main:
-        ["dist/{/,routes/,bin/}*{.js,.js.map}"]
+        ["dist/**/*"]
+      fast:
+        ["dist/{/,routes/,bin/,sourcemap/}*{.js,.js.map}"]
     coffee:
       main:
         files: [
@@ -34,4 +36,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.registerTask 'default', ['clean:main', 'coffee', 'copy:main']
-  grunt.registerTask 'fast', ['clean', 'coffee', 'copy:fast']
+  grunt.registerTask 'fast', ['clean:fast', 'coffee', 'copy:fast']
