@@ -34,4 +34,19 @@ body {
 .table > tbody > tr > td {
     vertical-align: middle;
 }
-  
+.screen-table{
+    margin: 0;
+}
+.table-title {
+    background-color:#3498db;
+    color: #fff;
+}
+.user-panel-hidden{
+    cursor: pointer;
+}
+.user-panel-body{
+    padding: 0;
+}
+.user-panel-content{
+    margin: 15px;
+}
