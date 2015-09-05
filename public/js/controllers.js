@@ -12,8 +12,9 @@
     $scope.name = 'Error!'
   });
 });
-*/
-function MyCtrl1() {}
+ */
+function MyCtrl1() {
+}
 MyCtrl1.$inject = [];
 
 
