@@ -23,6 +23,8 @@ router.get "/getContent", (req, res) ->
   content = []
   for user in users.getUsers()
     for slide in user.data.slides
+      if slide.data.hidden
+        continue
       content.push
         url: "content/#{slide.data.name}"
         type: slide.data.type
