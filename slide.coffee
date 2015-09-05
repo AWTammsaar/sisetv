@@ -1,6 +1,7 @@
 _ = require 'lodash'
 defaults = _.partialRight _.assign, (value, other) ->
-  if _.isUndefined(value) then other else value
+  if not _.isUndefined(value) then other else undefined
+
 class Slide
   constructor: (data) ->
     if data.duration < 0

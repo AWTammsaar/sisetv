@@ -5,7 +5,7 @@ fs = require 'fs'
 uploadDir = path.resolve path.join __dirname, 'public/content'
 fs.mkdirSync uploadDir if not fs.existsSync uploadDir
 defaults = _.partialRight _.assign, (value, other) ->
-  if _.isUndefined(value) then other else value
+  if not _.isUndefined(value) then other else undefined
 
 class User
   constructor: (data) ->
