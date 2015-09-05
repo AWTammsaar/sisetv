@@ -20,11 +20,30 @@ POST /setSlides
 POST /addSlide
     Add a slide to the user's slides. Must be a multipart form upload of the file to be added as a slide
     parameters:
-        data: A slide object without 'name'. The name will be derived from the uploaded file. See below for format.
+        data:
+            A slide object without 'name'. The name will be derived from the uploaded file. See below for format.
+        user:
+            OPTIONAL ADMIN-ONLY
+            If provided, the slide will be added to the user with the provided username instead.
     returns
         {
             data(Array of the user's slides)
         }
+
+POST /deleteSlide
+    Deletes a slide from the user's slides.
+    parameters:
+        id:
+            The ID of the slide (index in the user's slides array)
+        user:
+            OPTIONAL ADMIN-ONLY
+            If provided, the slide will be deleted from the user with the provided username instead.
+    returns
+        {
+            data(Array of the user's slides)
+        }
+
+
 
 Admin-only:
 GET /getUsers
@@ -43,12 +62,32 @@ POST /setUsers
 			data(Array of current users)
 		}
 
+POST /addUser
+    Adds a new user
+    parameters:
+        username: The username
+        password: The (unhashed) password
+        needsReset: OPTIONAL
+        admin: OPTIONAL
+    returns
+        {
+            data (Array of current users)
+        }
+
+POST /deleteUser
+    Deletes a user
+    parameters:
+        id: The ID of the user (index in the users array)
+    returns
+        {
+            data (Array of current users)
+        }
+
 Slide format:
 	{
 		type: String - The type of slide,
-		name: String - The name of the slide,
+		name: String - The name of the slide (also the name of the file),
 		duration: float - Seconds to show the slide for,
-		file: String - Name of the file
 		hidden: true/false - Is slide hidden?
 	}
 The API responds with a 400 status code and JSON object { error: (message) }  if there is an error
