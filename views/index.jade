@@ -20,9 +20,11 @@ block body
                   a(href="/admin/cc") Content Control
                li
                   a(href="/admin/admin") Admin Panel
+      - if (error!="")
+         .alert.alert-dismissable.alert-danger
+            p #{error}
       div(ng-controller="AppCtrl as app")
          div(ng-view)
-            span(app-version)
    footer(clas="footer")
       .container
          hr

@@ -1,44 +1,42 @@
 .row(ng-controller="ContentCtrl as content")
    .col-lg-12
-      table.table.table-striped.table-responsive
-         thead
-            tr.table-title
-               th.col-sm-1 Type
-               th.col-sm-4 File
-               th.col-sm-3 Duration
-               th.col-sm-4 Tools
-         tbody
-            tr(ng-repeat="file in content.files" ng-class="{'grayed': file.hidden}")
-               //Standard rows
-               td {{file.type}}
-               td {{file.name}}
-               td {{file.duration}} seconds
-               td
-                  div.btn-group(role="group")
-                     button.btn.btn-default(type="button" ng-click="content.swap(file.id,-1)")
-                        span.glyphicon.glyphicon-arrow-up
-                     button.btn.btn-default(type="button" ng-click="content.swap(file.id,1)")
-                        span.glyphicon.glyphicon-arrow-down
-                     button.btn.btn-default(type="button")
-                        span.glyphicon.glyphicon-edit
-                     button.btn.btn-default(type="button" ng-click="content.toggleVisible(file.id)" ng-class="{'active': file.hidden}")
-                        span.glyphicon.glyphicon-eye-open(ng-if="!file.hidden")
-                        span.glyphicon.glyphicon-eye-close(ng-if="file.hidden")
-                     button.btn.btn-default(type="button" ng-click="content.deleteFile(file.id)")
-                        span.glyphicon.glyphicon-trash
-            tr
-               form(action="/api/addSlide" method="post" enctype="multipart/form-data")
-
-                  //The "New" row
-                  td New
+      form(action="/api/addSlide" method="post" enctype="multipart/form-data")
+         table.table.table-striped.table-responsive
+            thead
+               tr.table-title
+                  th.col-sm-1 Type
+                  th.col-sm-4 File
+                  th.col-sm-3 Duration
+                  th.col-sm-4 Tools
+            tbody
+               tr(ng-repeat="file in content.files" ng-class="{'grayed': file.hidden}")
+                  //Standard rows
+                  td {{file.type}}
+                  td {{file.name}}
+                  td {{file.duration}} seconds
                   td
-                     button.btn.btn-default.btn-file Select file
-                        input(type="file" name="file")
-                  td
-                     form.form-inline(style="width:98%")
+                     div.btn-group(role="group")
+                        button.btn.btn-default(type="button" ng-click="content.swap(file.id,-1)")
+                           span.glyphicon.glyphicon-arrow-up
+                        button.btn.btn-default(type="button" ng-click="content.swap(file.id,1)")
+                           span.glyphicon.glyphicon-arrow-down
+                        button.btn.btn-default(type="button")
+                           span.glyphicon.glyphicon-edit
+                        button.btn.btn-default(type="button" ng-click="content.toggleVisible(file.id)" ng-class="{'active': file.hidden}")
+                           span.glyphicon.glyphicon-eye-open(ng-if="!file.hidden")
+                           span.glyphicon.glyphicon-eye-close(ng-if="file.hidden")
+                        button.btn.btn-default(type="button" ng-click="content.deleteFile(file.id)")
+                           span.glyphicon.glyphicon-trash
+               tr
+                     //The "New" row
+                     td New
+                     td
+                        button.btn.btn-default.btn-file Select file
+                           input(type="file" name="file")
+                     td
                         .input-group
                            input.form-control(name="duration" placeholder="duration" type="number")
                            .input-group-addon seconds
-                  td
-                     div.btn-group(role="group")
-                        button.btn.btn-default(type="submit") Submit
+                     td
+                        div.btn-group(role="group")
+                           input.btn.btn-default(type="submit" value="Submit")

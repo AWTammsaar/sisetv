@@ -5,9 +5,9 @@ block body
       br
       .col-lg-6.col-lg-offset-3.panel.panel-default
          form(method='POST', action='/auth/login')
-            -if (error) {
-            div #{error}
-            -}
+            - if (error!="")
+               .alert.alert-dismissable.alert-danger
+                  p #{error}
             h2 Hey there! Please log in
             .form-group
                label Username:
