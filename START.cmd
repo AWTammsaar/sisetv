@@ -1,2 +1,2 @@
 @ECHO OFF
-node\node.exe bin/www
+node\node.exe bin/www.js
