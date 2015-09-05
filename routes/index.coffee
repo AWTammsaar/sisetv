@@ -8,18 +8,18 @@ router.get '/admin', (req, res) ->
     res.render 'login', error: req.flash 'error'
 
 router.get '/admin/:page?', (req, res) ->
-  res.render 'index', title: req.page
+  res.render 'index', error: req.flash 'error'
 
 router.get "/partials/view1", (req, res) ->
-  res.render 'partials/partial1', pretty: true
+  res.render 'partials/partial1', error: req.flash 'error'
 
 router.get "/partials/view2", (req, res) ->
-  res.render 'partials/partial2', pretty: true
+  res.render 'partials/partial2', error: req.flash 'error'
 
 router.get "/partials/cc", (req, res) ->
-  res.render 'partials/contentcontrol', pretty: true
+  res.render 'partials/contentcontrol', error: req.flash 'error'
 
 router.get "/partials/admin", (req, res) ->
-  res.render 'partials/admincontrol', pretty: true
+  res.render 'partials/admincontrol', error: req.flash 'error'
 
 module.exports = router
