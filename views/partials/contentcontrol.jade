@@ -4,17 +4,15 @@
          thead
             tr.table-title
                th.col-sm-1 Type
-               th.col-sm-2 File
-               th.col-sm-2 Duration
+               th.col-sm-3 File
                th.col-sm-4 Transition
-               th.col-sm-3 Tools
+               th.col-sm-4 Tools
          tbody
             tr(ng-repeat="file in content.files" ng-class="{'grayed': file.hidden}")
                //Standard rows
                td {{file.type}}
                td {{file.name}}
                td {{file.duration}} seconds
-               td {{file.transition}} {{file.transitionTime}} seconds
                td
                   div.btn-group(role="group")
                      button.btn.btn-default(type="button" ng-click="content.swap(file.id,-1)")
@@ -29,31 +27,18 @@
                      button.btn.btn-default(type="button" ng-click="content.deleteFile(file.id)")
                         span.glyphicon.glyphicon-trash
             tr
-               //The "New" row
-               td New
-               td
-                  button.btn.btn-default.btn-file Select file
-                     input(type="file" ng-model="content.newFile.file")
-               td
-                  form.form-inline(style="width:98%")
-                     .input-group
-                        input.form-control(placeholder="duration" type="number" ng-model="content.newFile.duration")
-                        .input-group-addon seconds
-               td
-                  form.form-inline(style="width:85%")
-                     .input-group
-                        .input-group-addon.btn.btn-default.dropdown-toggle(
-                        type="button" id="menu1" data-toggle="dropdown") {{content.newFile.transition}}
-                           span.caret
-                        ul.dropdown-menu(role="menu" aria-labelledby="menu1")
-                           li
-                              a(href="#" role="menuitem" tabindex="-1" ng-click="content.newFile.transition='Smooth'") Smooth
-                           li
-                              a(href="#" role="menuitem" tabindex="-1" ng-click="content.newFile.transition='Slide left'") Slide left
-                        input.form-control(placeholder="duration" type="number" ng-model="content.newFile.transitionTime")
-                        .input-group-addon seconds
+               form(action="http://localhost:8000" method="post" enctype="multipart/form-data")
 
-
-               td
-                  div.btn-group(role="group")
-                     button.btn.btn-default(type="button" ng-click="content.addFile()") Submit
+                  //The "New" row
+                  td New
+                  td
+                     button.btn.btn-default.btn-file Select file
+                        input(type="file" name="file")
+                  td
+                     form.form-inline(style="width:98%")
+                        .input-group
+                           input.form-control(name="duration" placeholder="duration" type="number")
+                           .input-group-addon seconds
+                  td
+                     div.btn-group(role="group")
+                        button.btn.btn-default(type="submit") Submit

@@ -18,8 +18,8 @@ angular.module('myApp.services', []).
             console.log("Error while using getUser");
           });
       },
-      setSlides: function (fn) {
-        $http.post('/api/setSlides', {params: {}}).
+      setSlides: function (slides, fn) {
+        $http.post('/api/setSlides', {params: {slides:slides}}).
           success(function (data, status, headers, config) {
             fn({data: data.data});
           }).
@@ -27,13 +27,13 @@ angular.module('myApp.services', []).
             console.log("Error while using setSlides");
           });
       },
-      addSlide: function (fn) {
-        $http.post('/api/addSlide', {params: {}}).
+      addSlide: function (slide, fn) {
+        $http.post('/api/addSlide', {params: {data:slide}}).
           success(function (data, status, headers, config) {
             fn({data: data.data});
           }).
           error(function (data, status, headers, config) {
-            console.log("Error while using setSlides");
+            console.log("Error while using addSlide");
           });
       },
       // Admin functionality
@@ -43,16 +43,16 @@ angular.module('myApp.services', []).
             fn({data: data.data});
           }).
           error(function (data, status, headers, config) {
-            console.log("Error while using setSlides");
+            console.log("Error while using getUsers");
           });
       },
-      setUsers: function (fn) {
-        $http.post('/api/addSlide', {params: {}}).
+      setUsers: function (users, fn) {
+        $http.post('/api/setUsers', {params: {users:users}}).
           success(function (data, status, headers, config) {
             fn({data: data.data});
           }).
           error(function (data, status, headers, config) {
-            console.log("Error while using setSlides");
+            console.log("Error while using setUsers");
           });
       }
     };
