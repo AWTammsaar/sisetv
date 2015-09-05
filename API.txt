@@ -1,0 +1,54 @@
+SiseTV API:
+All requests start with /api
+
+GET /getUser
+    Gets the currently logged in user
+	returns:
+		{
+			data: {
+				username(String), slides(Array of slides. See below for format), needsReset(true/false), admin(true/false)
+			}
+		}
+POST /setSlides
+	Sets the user's slides
+	parameters:
+		slides: Array of slides. See below for format.
+	returns
+		{
+			data(Array of the user's slides)
+		}
+POST /addSlide
+    Add a slide to the user's slides. Must be a multipart form upload of the file to be added as a slide
+    parameters:
+        data: A slide object without 'name'. The name will be derived from the uploaded file. See below for format.
+    returns
+        {
+            data(Array of the user's slides)
+        }
+
+Admin-only:
+GET /getUsers
+	Gets all users
+	returns:
+		{
+			data(Array of users. See /getUser)
+		}
+
+POST /setUsers
+	Sets all users
+	parameters:
+		users: Array of users. See /getUser for format.
+	returns
+		{
+			data(Array of current users)
+		}
+
+Slide format:
+	{
+		type: String - The type of slide,
+		name: String - The name of the slide,
+		duration: float - Seconds to show the slide for,
+		file: String - Name of the file
+		hidden: true/false - Is slide hidden?
+	}
+The API responds with a 400 status code and JSON object { error: (message) }  if there is an error
