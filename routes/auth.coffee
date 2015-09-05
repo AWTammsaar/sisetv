@@ -4,7 +4,7 @@ passport = require 'passport'
 router = express.Router()
 
 router.post '/login', passport.authenticate 'local',
-  successRedirect: '/app'
+  successRedirect: '/admin'
   failureRedirect: '/'
   failureFlash: 'Invalid username or password!'
 
