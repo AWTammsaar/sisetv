@@ -64,7 +64,10 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
       return res.respond 'No such user!'
     user.addSlide data
     users.save()
-    res.respond user.data.slides
+    if user == req.body.user
+      res.redirect '/admin/cc'
+    else
+      res.redirect '/admin/admin'
 
 router.post '/deleteSlide', (req, res) ->
   if !req.body.id
