@@ -5,8 +5,6 @@ _ = require 'lodash'
 multer = require 'multer'
 upload = multer dest: 'temp/'
 users = require '../users'
-fs = require 'fs'
-path = require 'path'
 config = require '../config'
 Slide = require '../slide'
 

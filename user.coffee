@@ -1,5 +1,7 @@
 _ = require 'lodash'
 Slide = require './slide'
+path = require 'path'
+fs = require 'fs'
 uploadDir = path.resolve path.join __dirname, 'public/content'
 fs.mkdirSync uploadDir if not fs.existsSync uploadDir
 class User
