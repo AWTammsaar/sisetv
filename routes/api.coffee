@@ -37,7 +37,7 @@ router.get "/getConfig", (req, res) ->
 router.use (req, res, next) ->
   if !req.user
     req.flash "error", "You need to be logged in to perform this action!"
-    res.redirect "/"
+    res.redirect "/admin/index"
   else
     next()
 
