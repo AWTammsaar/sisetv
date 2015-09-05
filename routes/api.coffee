@@ -9,8 +9,6 @@ fs = require 'fs'
 path = require 'path'
 config = require '../config'
 Slide = require '../slide'
-uploadDir = path.resolve path.join __dirname, '../public/content'
-fs.mkdirSync uploadDir if not fs.existsSync uploadDir
 
 router.use (req, res, next) ->
   res.respond = (data) ->
@@ -48,8 +46,43 @@ router.post '/setSlides', (req, res) ->
   req.user.slides = req.body.slides
   res.respond req.user.slides
 
+router.post '/addSlide', upload.single('file'), (req, res) ->
+  if !req.body.data
+    return res.fail 'No slide data provided!'
+  user = req.user.data.username
+  data = req.body.data
+  data.fileName = req.file.originalname
+  data.filePath = req.file.path
+  if req.body.user
+    if !req.user.data.admin
+      return res.fail 'You need to be an admin to perform this action!'
+    user = req.body.user
+  users.getUser user, null, (user) ->
+    if !user
+      return res.respond 'No such user!'
+    user.addSlide data
+    users.save()
+    res.respond user.data.slides
+
+router.post '/deleteSlide', (req, res) ->
+  if !req.body.id
+    return res.fail 'No slide ID provided!'
+  user = req.user.data.username
+  if req.body.user
+    if !req.user.data.admin
+      return res.fail 'You need to be an admin to perform this action!'
+    user = req.body.user
+  users.getUser user, null, (user) ->
+    if !user
+      return res.respond 'No such user!'
+    user.deleteSlide req.body.id, (err) ->
+      if err
+        return res.fail err
+      users.save()
+      res.respond user.data.slides
+
 router.use (req, res, next) ->
-  if !req.user.admin
+  if !req.user.data.admin
     req.flash "error", "You need to be an admin to perform this action!"
     res.redirect "/admin/index"
   else
@@ -62,17 +95,22 @@ router.post '/setUsers', (req, res) ->
   users.setUsers(req.body.users)
   res.respond users.getUsers().map (u) -> _.omit u, 'password'
 
-router.post '/addSlide', upload.single('file'), (req, res) ->
-  if !req.body.data
-    return res.fail 'No slide data provided!'
-  name = req.file.originalname
-  i = 1
-  while fs.existsSync uploadDir
-    name = req.file.originalname.slice(0,
-        req.file.originalname.lastIndexOf('.')) + "_" + i + req.file.originalname.slice(req.file.originalname.lastIndexOf('.'))
-  fs.renameSync req.file.path, path.join uploadDir, name
-  req.body.data.name = name
-  req.user.slides.push(new Slide req.body.data)
-  res.respond req.user.slides
+router.post '/addUser', (req, res) ->
+  if !req.body.username or !req.body.password
+    return res.fail 'Missing username or password!'
+  users.createUser req.body, () ->
+    res.respond users.getUsers().map (u) -> _.omit u, 'password'
+
+router.post '/deleteUser', (req, res) ->
+  if !req.body.id
+    return res.fail 'No user ID provided!'
+  userList = users.getUsers()
+  if req.body.id < 0 or req.body.id >= userList.length
+    return res.fail 'Invalid user ID!'
+  if userList[req.body.id].data.admin
+    return res.fail 'The admin account cannot be deleted!'
+  userList.splice req.body.id
+  users.save () ->
+    res.respond users.getUsers().map (u) -> _.omit u, 'password'
 
 module.exports = router

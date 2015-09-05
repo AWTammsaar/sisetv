@@ -21,7 +21,7 @@ exp =
     user = new User options
 
     users.push user
-    this.save -> cb users
+    @save -> cb users
 
   getUsers: ->
     return users
