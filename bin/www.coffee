@@ -69,7 +69,7 @@ server.on 'listening', onListening
 bind = if typeof port == 'string' then "Pipe #{port}" else "Port #{port}"
 
 console.log chalk.cyan 'SiseTV is now running'
-console.log chalk.cyan "Visit #{chalk.magenta 'http://localhost:' + (app.get 'port') + /admin} to see it"
+console.log chalk.cyan "Visit #{chalk.magenta 'http://localhost:' + (app.get 'port') + '/admin'} to see it"
 
 
 
