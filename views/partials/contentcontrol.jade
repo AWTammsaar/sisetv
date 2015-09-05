@@ -4,8 +4,8 @@
          thead
             tr.table-title
                th.col-sm-1 Type
-               th.col-sm-3 File
-               th.col-sm-4 Transition
+               th.col-sm-4 File
+               th.col-sm-3 Duration
                th.col-sm-4 Tools
          tbody
             tr(ng-repeat="file in content.files" ng-class="{'grayed': file.hidden}")
@@ -27,7 +27,7 @@
                      button.btn.btn-default(type="button" ng-click="content.deleteFile(file.id)")
                         span.glyphicon.glyphicon-trash
             tr
-               form(action="http://localhost:8000" method="post" enctype="multipart/form-data")
+               form(action="/api/addSlide" method="post" enctype="multipart/form-data")
 
                   //The "New" row
                   td New
