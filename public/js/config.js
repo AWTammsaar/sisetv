@@ -1,9 +1,9 @@
 //Default configuration. Will be overwritten with the values in config.json
 var config = {
   //Location of the content definition
-  contentURL: "content.json",
+  contentURL: "/api/getContent",
 
-  configURL: "config.json",
+  configURL: "/api/getConfig",
 
   // Default duration of slides
   defaultDelay: 3,
@@ -15,7 +15,7 @@ var config = {
   defaultTransition: "none",
 
   //Number of cycles to run before checking for new content again
-  checkCycles: 20,
+  checkCycles: 20
 };
 
 $.getJSON(config.configURL, function (data) {
