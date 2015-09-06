@@ -80,6 +80,9 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     fs.unlink req.file.path
     req.flash 'error', 'No duration provided!'
     return res.redirect '/admin'
+  if !req.file
+    req.flash 'error', 'No file uploaded!'
+    return res.redirect '/admin'
   user = req.user.data.username
   data =
     duration: parseInt req.body.duration
