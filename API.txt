@@ -44,7 +44,7 @@ POST /deleteSlide
 POST /registerUser
     Registers a user from a register link
     parameters:
-        registerLink: The register link ID
+        registerID: The register link ID
         username: The username
         password: The (unhashed) password
     returns
