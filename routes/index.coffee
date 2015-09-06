@@ -1,7 +1,7 @@
 express = require 'express'
 router = express.Router()
 bcrypt = require 'bcrypt-nodejs'
-users = require '../users'
+users = require '../app/users'
 
 
 router.post '/api/resetPassword', (req, res) ->

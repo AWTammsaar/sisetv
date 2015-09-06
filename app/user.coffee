@@ -2,7 +2,7 @@ _ = require 'lodash'
 Slide = require './slide'
 path = require 'path'
 fs = require 'fs'
-uploadDir = path.resolve path.join __dirname, 'public/content'
+uploadDir = path.resolve path.join __dirname, '../public/content'
 fs.mkdirSync uploadDir if not fs.existsSync uploadDir
 defaults = _.partialRight _.assign, (value, other) ->
   if not _.isUndefined(value) then other else undefined
@@ -37,7 +37,7 @@ class User
 
   deleteSlide: (id, cb) ->
     if id >= 0 and id < @data.slides.length
-      filePath = path.resolve path.join __dirname, "public/content", @data.slides[id].data.name
+      filePath = path.resolve path.join __dirname, "../public/content", @data.slides[id].data.name
       fs.unlinkSync filePath if fs.existsSync filePath
       @data.slides.splice id, 1
       return cb null

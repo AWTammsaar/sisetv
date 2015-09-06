@@ -13,9 +13,9 @@ FileStore = require('session-file-store')(session)
 storage.initSync()
 
 
-routes = require './routes/index'
-apiRoute = require './routes/api'
-authRoute = require './routes/auth'
+routes = require './../routes/index'
+apiRoute = require './../routes/api'
+authRoute = require './../routes/auth'
 users = require "./users"
 
 app = express()
@@ -32,7 +32,7 @@ passport.deserializeUser (user, done) ->
     done null, user
 
 # view engine setup
-app.set 'views', path.join(__dirname, 'views')
+app.set 'views', path.resolve path.join(__dirname, '../views')
 app.set 'view engine', 'jade'
 
 # uncomment after placing your favicon in /public
@@ -50,7 +50,7 @@ app.use session
 
 app.use passport.initialize()
 app.use passport.session()
-app.use express.static(path.join __dirname, 'public')
+app.use express.static( path.resolve path.join __dirname, '../public')
 
 app.use '/', routes
 app.use '/api', apiRoute

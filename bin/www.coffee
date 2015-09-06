@@ -4,7 +4,7 @@
   Module dependencies.
 ###
 require('source-map-support').install()
-app = require '../app'
+app = require '../app/app'
 debug = require('debug')('sisetv:server')
 http = require 'http'
 chalk = require 'chalk'
@@ -80,7 +80,7 @@ getIP (err, ip) ->
   url = 'http://' + ip + ':' + (app.get 'port')
   storage.setItemSync 'url', url
   console.log chalk.cyan "Visit #{chalk.magenta url + '/admin'} for the administration interface"
-  console.log chalk.cyan "Point the browsers on your information display computers to #{url}"
+  console.log chalk.cyan "Point the browsers on your information display computers to #{chalk.magenta url}"
 
 
 
