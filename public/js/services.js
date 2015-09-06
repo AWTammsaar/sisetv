@@ -36,6 +36,15 @@ angular.module('myApp.services', []).
             console.log("Error while using addSlide");
           });
       },
+      deleteSlide: function (id, fn) {
+        $http.post('/api/addSlide', {params: {id:id}}).
+          success(function (data, status, headers, config) {
+            fn({data: data.data});
+          }).
+          error(function (data, status, headers, config) {
+            console.log("Error while using deleteSlide");
+          });
+      },
       // Admin functionality
       getUsers: function (fn) {
         $http.get('/api/getUsers', {params: {}}).
