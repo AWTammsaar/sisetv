@@ -9,6 +9,7 @@ LocalStrategy = require('passport-local').Strategy
 storage = require 'node-persist'
 flash = require 'connect-flash'
 session = require 'express-session'
+FileStore = require('session-file-store')(session)
 storage.initSync()
 
 
@@ -44,7 +45,8 @@ app.use flash()
 app.use session
   saveUninitialized: true,
   resave: true,
-  secret: 'keyboard dog'
+  secret: 'keyboard dog',
+  store: new FileStore()
 
 app.use passport.initialize()
 app.use passport.session()

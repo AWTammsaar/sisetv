@@ -45,11 +45,11 @@ router.get "/getConfig", (req, res) ->
 router.post "/registerUser", (req, res) ->
   if !req.body.registerID
     req.flash 'error', 'No register link ID!'
-    return res.redirect '/login'
+    return res.redirect '/admin'
 
   if !req.body.username or !req.body.password
     req.flash 'error', 'No username or password!'
-    return res.redirect '/login'
+    return res.redirect '/admin'
 
   for u in users.getUsers()
     if !u.data.registered and u.data.registerID == req.body.registerID
@@ -57,10 +57,10 @@ router.post "/registerUser", (req, res) ->
       u.data.password = bcrypt.hashSync req.body.password
       u.data.registered = true
       users.save()
-      req.login u
-      return res.redirect '/admin/index'
+      req.login u, () ->
+        return res.redirect '/admin/index'
   req.flash 'error', 'Invalid register link ID!'
-  res.redirect '/login'
+  res.redirect '/admin'
 
 router.use (req, res, next) ->
   if !req.user
@@ -70,6 +70,7 @@ router.use (req, res, next) ->
     next()
 
 router.get '/logout', (req, res) ->
+  console.log 'logout'
   req.logout()
   res.redirect '/admin'
 
@@ -109,6 +110,7 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
       req.flash 'error', 'Slide limit reached!'
       return res.redirect '/admin'
     user.addSlide data, (err) ->
+      users.save()
       if err
         req.flash 'error', err
       if user == req.user
@@ -116,7 +118,6 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
       else
         res.redirect '/admin/admin'
       fs.unlink req.file.path if fs.existsSync path
-      users.save()
 
 router.post '/deleteSlide', (req, res) ->
   if not req.body.id?
@@ -152,7 +153,7 @@ router.post '/createRegisterLink', (req, res) ->
 
   code = randomString(30)
   users.createUser { displayName: req.body.displayName, registerID: code },
-    user ->
+    () ->
       res.redirect '/admin/admin'
 
 

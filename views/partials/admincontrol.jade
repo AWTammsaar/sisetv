@@ -6,7 +6,7 @@ div(ng-controller="AdminCtrl as adminctrl")
             .col-lg-2
                |New user:
             .col-lg-6.new-user-form
-               form(method='POST' action='/createRegisterLink')
+               form(method='POST' action='/api/createRegisterLink')
                   .input-group.input-group-sm
                      input.form-control(type="text" name="displayName" placeholder="user display name")
                      span.input-group-btn
