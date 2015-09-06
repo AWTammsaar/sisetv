@@ -49,6 +49,7 @@ class User
     while fs.existsSync path.join uploadDir, name
       name = data.fileName.slice(0,
           data.fileName.lastIndexOf('.')) + "_" + i + ext
+      i++
 
     data.name = name
     for type, exts of types
