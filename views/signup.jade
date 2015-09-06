@@ -1,0 +1,30 @@
+extends layout
+
+block body
+   .container
+      br
+      br
+      .col-lg-6.col-lg-offset-3.panel.panel-default
+         form(method='POST', action='/auth/login')
+            - if (error!="")
+               .alert.alert-dismissable.alert-danger
+                  button(type="button" class="close" data-dismiss="alert") ×
+                  p #{error}
+            h3 Hello and welcome to SiseTV!
+            h2 Your are registering as: #{displayName}
+            p This is an administration system for information-displays in your building.
+            P Let's start off by getting you registered!
+            br
+            .form-group
+               label Username:
+               input.form-control(type='text', name='username', required)
+            .form-group
+               label Password:
+               input.form-control(type='password', name='password', required)
+            - if (registerId!="")
+               input(type="hidden" name="registerId" value="#{registerId}")
+            div
+               button.btn.btn-default.pull-right(type='submit') Log in
+            br
+            br
+            br
