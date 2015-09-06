@@ -19,6 +19,7 @@ class User
       slides: []
       needsReset: false
       admin: false
+      displayName: ""
     }, data)
 
   toJSON: ->
