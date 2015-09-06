@@ -22,6 +22,7 @@ block body
                   a(href="/admin/admin") Admin Panel
       - if (error!="")
          .alert.alert-dismissable.alert-danger
+            button(type="button" class="close" data-dismiss="alert") ×
             p #{error}
       div(ng-controller="AppCtrl as app")
          div(ng-view)
