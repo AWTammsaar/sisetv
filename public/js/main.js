@@ -6,10 +6,6 @@ if (typeof loaders === 'undefined' || typeof transitions === 'undefined' || type
 var content;
 var current = 0;
 
-//New content on standby?
-var standby = false;
-var lastStandby = -1;
-var standbyContent = null;
 var cycles = 0;
 
 function nextContent() {
@@ -19,7 +15,6 @@ function nextContent() {
   //Transition out the old content
   //noinspection JSJQueryEfficiency
   var oldElem = $("#content-" + current);
-  var last = current;
   current += 1;
   // Fetch new content
   if (current >= content.length) {
@@ -84,11 +79,11 @@ function getNewestData() {
 $(function () {
   $(document).idleTimer(3000);
 
-  $(document).on("idle.idleTimer", function (event, elem, obj) {
+  $(document).on("idle.idleTimer", function () {
     $("body").css("cursor", "none");
   });
 
-  $(document).on("active.idleTimer", function (event, elem, obj, triggerevent) {
+  $(document).on("active.idleTimer", function () {
     $("body").css("cursor", "");
   });
   getNewestData();
