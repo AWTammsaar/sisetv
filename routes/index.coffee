@@ -10,12 +10,6 @@ router.get '/admin', (req, res) ->
 router.get '/admin/:page?', (req, res) ->
   res.render 'index', error: req.flash 'error'
 
-router.get "/partials/view1", (req, res) ->
-  res.render 'partials/partial1', error: req.flash 'error'
-
-router.get "/partials/view2", (req, res) ->
-  res.render 'partials/partial2', error: req.flash 'error'
-
 router.get "/partials/cc", (req, res) ->
   res.render 'partials/contentcontrol', error: req.flash 'error'
 

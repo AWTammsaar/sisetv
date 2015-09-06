@@ -7,12 +7,6 @@
   var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute']);
 
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
-    $routeProvider.when('/admin/view1', {
-      templateUrl: 'partials/view1',
-    });
-    $routeProvider.when('/admin/view2', {
-      templateUrl: 'partials/view2',
-    });
     $routeProvider.when('/admin/admin', {
       templateUrl: 'partials/admin',
     });

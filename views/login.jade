@@ -3,6 +3,7 @@ extends layout
 block body
    .container
       br
+      br
       .col-lg-6.col-lg-offset-3.panel.panel-default
          form(method='POST', action='/auth/login')
             - if (error!="")
@@ -10,6 +11,7 @@ block body
                   button(type="button" class="close" data-dismiss="alert") ×
                   p #{error}
             h2 Hey there! Please log in
+            br
             .form-group
                label Username:
                input.form-control(type='text', name='username', required)
