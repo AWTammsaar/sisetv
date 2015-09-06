@@ -5,7 +5,7 @@ block body
       br
       br
       .col-lg-6.col-lg-offset-3.panel.panel-default
-         form(method='POST', action='/auth/login')
+         form(method='POST', action='/api/registerUser')
             - if (error!="")
                .alert.alert-dismissable.alert-danger
                   button(type="button" class="close" data-dismiss="alert") ×
@@ -22,7 +22,7 @@ block body
                label Password:
                input.form-control(type='password', name='password', required)
             - if (registerId!="")
-               input(type="hidden" name="registerId" value="#{registerId}")
+               input(type="hidden" name="registerID" value="#{registerId}")
             div
                button.btn.btn-default.pull-right(type='submit') Log in
             br

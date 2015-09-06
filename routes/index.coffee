@@ -61,7 +61,7 @@ router.get '/admin', (req, res) ->
 
 router.get '/admin/:page?', (req, res) ->
   if !req.user
-    res.redirect '/admin'
+    return res.redirect '/admin'
   res.render 'index', error: req.flash 'error'
 
 router.get "/partials/cc", (req, res) ->

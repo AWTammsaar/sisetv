@@ -9,7 +9,7 @@ block body
                span.icon-bar
                span.icon-bar
                span.icon-bar
-            a.navbar-brand(href="#") Brand
+            a.navbar-brand(href="#") SiseTV
          .collapse.navbar-collapse.navbar-ex1-collapse
             ul.nav.navbar-nav
                li
@@ -17,7 +17,7 @@ block body
                li
                   a(href="/admin/admin") Admin Panel
             .navbar-text.navbar-right
-               a(ng-click="app.logout()") Log out
+               a(ng-href="/api/logout" target="_self") Log out
       - if (error!="")
          .alert.alert-dismissable.alert-danger
             button(type="button" class="close" data-dismiss="alert") ×
