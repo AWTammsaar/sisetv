@@ -8,6 +8,7 @@ app = require '../app'
 debug = require('debug')('sisetv:server')
 http = require 'http'
 chalk = require 'chalk'
+getIP = require('external-ip')()
 
 ###
     Normalize a port into a number, string, or false.
@@ -68,8 +69,14 @@ server.on 'listening', onListening
 
 bind = if typeof port == 'string' then "Pipe #{port}" else "Port #{port}"
 
-console.log chalk.cyan 'SiseTV is now running'
-console.log chalk.cyan "Visit #{chalk.magenta 'http://localhost:' + (app.get 'port') + '/admin'} to see it"
+getIP (err, ip) ->
+  if err
+    console.log chalk.red 'Failed to get external IP, but SiseTV is still running'
+    ip = 'localhost'
+  else
+    console.log chalk.cyan 'SiseTV is now running'
+  app.set 'ip', ip
+  console.log chalk.cyan "Visit #{chalk.magenta 'http://' + ip + ':' + (app.get 'port') + '/admin'} to see it"
 
 
 
