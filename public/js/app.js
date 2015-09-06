@@ -25,7 +25,7 @@
   app.controller("ContentCtrl", function ContentCtrl($scope, $http, apiService) {
     //operation initiated when controller is constructed
     var contentCtrl = this;
-    this.swap = function (id, direction) {
+    contentCtrl.swap = function (id, direction) {
       var targetid = id + direction;
       if (this.files.length > targetid && targetid >= 0) {
         var swapinit = contentCtrl.files[id],
@@ -36,22 +36,31 @@
         contentCtrl.files[targetid] = swapinit;
       }
     };
+
     contentCtrl.toggleVisible = function (id) {
       contentCtrl.files[id].hidden = !contentCtrl.files[id].hidden;
       apiService.setSlides(contentCtrl.files)
     };
+
     contentCtrl.deleteFile = function (id) {
-      contentCtrl.files.splice(id, 1);
-      contentCtrl.reOrderFrom(id);
+      apiService.deleteSlide(id,function(data){
+        contentCtrl.files = data;
+        contentCtrl.reOrderFrom(0);
+      });
     };
+
     contentCtrl.reOrderFrom = function (startid) {
       // Allows for optimal array indexing.
       for (var i = startid, l = contentCtrl.files.length; i < l; i++) {
         contentCtrl.files[i].id = i;
       }
     };
+
+
+    // Initialize slide data
     apiService.getUser(function(data){
       contentCtrl.files = data.slides;
+      contentCtrl.reOrderFrom(0);
     });
 
   });
@@ -67,14 +76,7 @@
         adminctrl.toggled[target] = true;
       }
     };
-    /**$http({method: 'GET', url: '/api/name'}).
-     success(function(data, status, headers, config) {
-                appctrl.name = data.name;
-            }).
-     error(function(data, status, headers, config) {
-                appctrl.name = 'Error!'
-            });
-     */
+
     adminctrl.slidegroup = [
       {
         name: "ASD",
