@@ -76,7 +76,8 @@ getIP (err, ip) ->
   else
     console.log chalk.cyan 'SiseTV is now running'
   app.set 'ip', ip
-  console.log chalk.cyan "Visit #{chalk.magenta 'http://' + ip + ':' + (app.get 'port') + '/admin'} to see it"
+  console.log chalk.cyan "Visit #{chalk.magenta 'http://' + ip + ':' + (app.get 'port') + '/admin'} for the administration interface"
+  console.log chalk.cyan "Point the browsers on your information display computers to #{chalk.magenta 'http://' + ip + ':' + (app.get 'port')}"
 
 
 
