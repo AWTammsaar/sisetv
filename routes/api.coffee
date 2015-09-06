@@ -106,11 +106,11 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     user.addSlide data, (err) ->
       if err
         req.flash 'error', err
-        fs.unlink req.file.path
       if user == req.user
         res.redirect '/admin/cc'
       else
         res.redirect '/admin/admin'
+      fs.unlink req.file.path if fs.existsSync path
       users.save()
 
 router.post '/deleteSlide', (req, res) ->
