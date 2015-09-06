@@ -16,6 +16,8 @@ block body
                   a(href="/admin/cc") Content Control
                li
                   a(href="/admin/admin") Admin Panel
+            .navbar-text.navbar-right
+               a(ng-click="app.logout()") Log out
       - if (error!="")
          .alert.alert-dismissable.alert-danger
             button(type="button" class="close" data-dismiss="alert") ×

@@ -19,7 +19,7 @@ angular.module('myApp.services', []).
           });
       },
       setSlides: function (slides, fn) {
-        $http.post('/api/setSlides', {slides:slides}).
+        $http.post('/api/setSlides', {slides: slides}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -28,7 +28,7 @@ angular.module('myApp.services', []).
           });
       },
       addSlide: function (slide, fn) {
-        $http.post('/api/addSlide', {data:slide}).
+        $http.post('/api/addSlide', {data: slide}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -37,7 +37,7 @@ angular.module('myApp.services', []).
           });
       },
       deleteSlide: function (id, fn) {
-        $http.post('/api/deleteSlide', {id:id}).
+        $http.post('/api/deleteSlide', {id: id}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -56,7 +56,7 @@ angular.module('myApp.services', []).
           });
       },
       setUsers: function (users, fn) {
-        $http.post('/api/setUsers', {users:users}).
+        $http.post('/api/setUsers', {users: users}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -65,4 +65,16 @@ angular.module('myApp.services', []).
           });
       }
     };
+  }]).
+  service('logout', ["$http", function ($http) {
+    return function (fn) {
+      $http.get('/api/logout').
+        success(function (data, status, headers, config) {
+          fn(false);
+        }).
+        error(function (data, status, headers, config) {
+          fn(false);
+        });
+    }
   }]);
+;
