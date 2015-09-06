@@ -53,6 +53,8 @@ router.get '/admin', (req, res) ->
     res.render 'login', error: req.flash 'error'
 
 router.get '/admin/:page?', (req, res) ->
+  if !req.user
+    res.redirect '/admin'
   res.render 'index', error: req.flash 'error'
 
 router.get "/partials/cc", (req, res) ->
