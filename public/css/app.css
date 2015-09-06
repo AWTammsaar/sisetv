@@ -53,3 +53,13 @@ body {
 .alert.alert-dismissable.alert-danger{
     margin-top:20px;
 }
+.link-space {
+    background-color: #fff;
+}
+.new-user-form{
+    margin-top: -5px;
+}
+.new-user-panel{
+    margin-right: 0;
+    margin-left: 0;
+}

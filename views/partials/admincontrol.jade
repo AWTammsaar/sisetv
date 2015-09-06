@@ -1,20 +1,34 @@
 // Created by AlWilliam on 7/18/2015.
 div(ng-controller="AdminCtrl as adminctrl")
+   .row.col.lg-12.panel.panel-default.new-user-panel
+         .panel-heading
+            | &nbsp;
+            .col-lg-2
+               |New user:
+            .col-lg-6.new-user-form
+               form(method='POST' action='/createRegisterLink')
+                  .input-group.input-group-sm
+                     input.form-control(type="text" name="displayName" placeholder="user display name")
+                     span.input-group-btn
+                        input.btn.btn-default(type="submit" value="Submit")
    .row(ng-repeat="user in adminctrl.slidegroup")
       .col-lg-12
          .panel.panel-default(ng-if="user.registered==false")
             .panel-heading
-               b {{user.displayName}} (pending)
+               b {{user.displayName}} (pending)&nbsp;&nbsp;
+               | Send this URL to user:&nbsp;
+               span.well.well-sm.link-space(select-on-click)
+                  | {{user.registerLink}}
 
          .panel.panel-default(ng-if="user.registered==true")
-            .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.name)")
+            .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.displayName)")
                b {{user.displayName}}
                //.col-lg-3.col-lg-offset-5.btn-group(role="group")
                   button.btn.btn-default(type="button" ng-click="")
                      span.glyphicon.glyphicon-arrow-up
                   button.btn.btn-default(type="button" ng-click="")
                      span.glyphicon.glyphicon-arrow-down
-            .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.name]")
+            .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.displayName]")
                .user-panel-content
                   | Delete user?
                table.table.table-striped.table-responsive.screen-table

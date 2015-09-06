@@ -79,7 +79,8 @@
     adminctrl.slidegroup = [
       {
         displayName: "ASD",
-        registered: false
+        registered: false,
+        registerLink: "wasdtesting"
       },
       {
         displayName: "Otherperson",
