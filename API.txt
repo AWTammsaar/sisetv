@@ -43,6 +43,15 @@ POST /deleteSlide
             data(Array of the user's slides)
         }
 
+POST /registerUser
+    Registers a user from a register link
+    parameters:
+        registerLink: The register link ID
+        username: The username
+        password: The (unhashed) password
+    returns
+        Redirect to the admin panel
+
 
 
 Admin-only:
@@ -67,11 +76,19 @@ POST /addUser
     parameters:
         username: The username
         password: The (unhashed) password
+        displayName: The user's display name
         needsReset: OPTIONAL
         admin: OPTIONAL
     returns
+        Redirect to the admin panel
+
+POST /createRegisterLink
+    Creates a link where a user can register themselves
+    parameters:
+        displayName: The user's display name.
+    returns
         {
-            data (Array of current users)
+            data (String - link where the user can register themselves)
         }
 
 POST /deleteUser

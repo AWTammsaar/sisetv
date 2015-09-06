@@ -42,6 +42,10 @@ router.use (req, res, next) ->
   else
     next()
 
+router.get '/logout', (req, res) ->
+  req.logout()
+  res.redirect '/login'
+
 router.get '/admin', (req, res) ->
   if req.user
     res.redirect '/admin/cc'
