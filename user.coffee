@@ -37,8 +37,10 @@ class User
     return data
 
   deleteSlide: (id, cb) ->
-    if id > 0 and id < @data.slides.length
-      @data.slides.splice id
+    if id >= 0 and id < @data.slides.length
+      filePath = path.resolve path.join __dirname, "public/content", @data.slides[id].data.name
+      fs.unlinkSync filePath if fs.existsSync filePath
+      @data.slides.splice id, 1
       return cb null
     return cb "No slide with ID #{id}"
 

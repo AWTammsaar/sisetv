@@ -114,7 +114,7 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
       users.save()
 
 router.post '/deleteSlide', (req, res) ->
-  if !req.body.id
+  if not req.body.id?
     return res.fail 'No slide ID provided!'
   user = req.user.data.username
   if req.body.user
@@ -173,7 +173,7 @@ router.post '/deleteUser', (req, res) ->
     return res.fail 'Invalid user ID!'
   if userList[req.body.id].data.admin
     return res.fail 'The admin account cannot be deleted!'
-  userList.splice req.body.id
+  userList.splice req.body.id, 1
   users.save () ->
     res.respond users.getUsers()
 
