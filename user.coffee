@@ -32,7 +32,6 @@ class User
     if !data.registered
       url = storage.getItemSync('url') + "/register/" + data.registerID
       data.registerLink = url
-    data = _.omit data, 'password'
     data.slides = data.slides.map (s) -> s.data
     return data
 

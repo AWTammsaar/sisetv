@@ -56,6 +56,7 @@ router.post "/registerUser", (req, res) ->
       u.data.username = req.body.username
       u.data.password = bcrypt.hashSync req.body.password
       u.data.registered = true
+      users.save()
       req.login u
       return res.redirect '/admin/index'
   req.flash 'error', 'Invalid register link ID!'
