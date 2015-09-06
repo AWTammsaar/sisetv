@@ -21,13 +21,13 @@ module.exports = (grunt) ->
       main:
         files: [
           expand: true,
-          src: ["public/**", "views/**", "node/**", "START.cmd", "INSTALL.cmd", "package.json", "LICENSE.txt", "!public/content"],
+          src: ["public/**", "views/**", "node/**", "START.cmd", "INSTALL.cmd", "package.json", "LICENSE.txt", "!public/content/**"],
           dest: "dist/"
         ]
       fast:
         files: [
           expand: true,
-          src: ["public/**", "views/**", "START.cmd", "INSTALL.cmd", "package.json", "LICENSE.txt", "!public/content"],
+          src: ["public/**", "views/**", "START.cmd", "INSTALL.cmd", "package.json", "LICENSE.txt", "!public/content/**"],
           dest: "dist/"
         ]
 
