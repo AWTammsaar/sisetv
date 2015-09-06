@@ -10,7 +10,7 @@ angular.module('myApp.services', []).
   service('apiService', ["$http", function ($http) {
     return {
       getUser: function (fn) {
-        $http.get('/api/getUser', {params: {}}).
+        $http.get('/api/getUser', {}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -19,7 +19,7 @@ angular.module('myApp.services', []).
           });
       },
       setSlides: function (slides, fn) {
-        $http.post('/api/setSlides', {params: {slides:slides}}).
+        $http.post('/api/setSlides', {slides:slides}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -28,7 +28,7 @@ angular.module('myApp.services', []).
           });
       },
       addSlide: function (slide, fn) {
-        $http.post('/api/addSlide', {params: {data:slide}}).
+        $http.post('/api/addSlide', {data:slide}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -37,7 +37,7 @@ angular.module('myApp.services', []).
           });
       },
       deleteSlide: function (id, fn) {
-        $http.post('/api/addSlide', {params: {id:id}}).
+        $http.post('/api/deleteSlide', {id:id}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -47,7 +47,7 @@ angular.module('myApp.services', []).
       },
       // Admin functionality
       getUsers: function (fn) {
-        $http.get('/api/getUsers', {params: {}}).
+        $http.get('/api/getUsers', {}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).
@@ -56,7 +56,7 @@ angular.module('myApp.services', []).
           });
       },
       setUsers: function (users, fn) {
-        $http.post('/api/setUsers', {params: {users:users}}).
+        $http.post('/api/setUsers', {users:users}).
           success(function (data, status, headers, config) {
             fn(data.data);
           }).

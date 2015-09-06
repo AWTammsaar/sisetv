@@ -24,7 +24,7 @@
   app.controller("ContentCtrl", function ContentCtrl($scope, $http, apiService) {
     //operation initiated when controller is constructed
     var contentCtrl = this;
-    contentCtrl.files= {};
+    contentCtrl.files = {};
     contentCtrl.swap = function (id, direction) {
       var targetid = id + direction;
       if (this.files.length > targetid && targetid >= 0) {
@@ -39,15 +39,15 @@
 
     contentCtrl.toggleVisible = function (id) {
       contentCtrl.files[id].hidden = !contentCtrl.files[id].hidden;
-      apiService.setSlides(contentCtrl.files, function(data){
+      apiService.setSlides(contentCtrl.files, function (data) {
         console.log(data);
         contentCtrl.files = data;
         contentCtrl.reOrderFrom(0);
-      })
+      });
     };
 
     contentCtrl.deleteFile = function (id) {
-      apiService.deleteSlide(id,function(data){
+      apiService.deleteSlide(id, function (data) {
         contentCtrl.files = data;
         contentCtrl.reOrderFrom(0);
       });
@@ -61,7 +61,7 @@
     };
 
     // Initialize slide data
-    apiService.getUser(function(data){
+    apiService.getUser(function (data) {
       contentCtrl.files = data.slides;
       contentCtrl.reOrderFrom(0);
     });
@@ -73,11 +73,7 @@
     var adminctrl = this;
     adminctrl.toggled = {};
     adminctrl.toggle = function (target) {
-      if (adminctrl.toggled[target]) {
-        adminctrl.toggled[target] = false;
-      } else {
-        adminctrl.toggled[target] = true;
-      }
+      adminctrl.toggled[target] = !adminctrl.toggled[target];
     };
 
     adminctrl.slidegroup = [
