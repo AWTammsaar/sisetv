@@ -68,7 +68,7 @@
 
   });
 
-  app.controller("AdminCtrl", function AdminCtrl($scope, $http) {
+  app.controller("AdminCtrl", function AdminCtrl($scope, $http, apiService) {
     //operation initiated when controller is constructed
     var adminctrl = this;
     adminctrl.toggled = {};
@@ -183,6 +183,10 @@
       }
 
     ];
+
+    apiService.getUsers(function(data){
+      adminctrl.slidegroup=data;
+    })
   });
 
 
