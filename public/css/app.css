@@ -50,3 +50,6 @@ body {
 .user-panel-content{
     margin: 15px;
 }
+.alert.alert-dismissable.alert-danger{
+    margin-top:20px;
+}

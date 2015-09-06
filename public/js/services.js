@@ -12,7 +12,7 @@ angular.module('myApp.services', []).
       getUser: function (fn) {
         $http.get('/api/getUser', {params: {}}).
           success(function (data, status, headers, config) {
-            fn({data: data.data});
+            fn(data.data);
           }).
           error(function (data, status, headers, config) {
             console.log("Error while using getUser");
@@ -21,7 +21,7 @@ angular.module('myApp.services', []).
       setSlides: function (slides, fn) {
         $http.post('/api/setSlides', {params: {slides:slides}}).
           success(function (data, status, headers, config) {
-            fn({data: data.data});
+            fn(data.data);
           }).
           error(function (data, status, headers, config) {
             console.log("Error while using setSlides");
@@ -30,7 +30,7 @@ angular.module('myApp.services', []).
       addSlide: function (slide, fn) {
         $http.post('/api/addSlide', {params: {data:slide}}).
           success(function (data, status, headers, config) {
-            fn({data: data.data});
+            fn(data.data);
           }).
           error(function (data, status, headers, config) {
             console.log("Error while using addSlide");
@@ -39,7 +39,7 @@ angular.module('myApp.services', []).
       deleteSlide: function (id, fn) {
         $http.post('/api/addSlide', {params: {id:id}}).
           success(function (data, status, headers, config) {
-            fn({data: data.data});
+            fn(data.data);
           }).
           error(function (data, status, headers, config) {
             console.log("Error while using deleteSlide");
@@ -49,7 +49,7 @@ angular.module('myApp.services', []).
       getUsers: function (fn) {
         $http.get('/api/getUsers', {params: {}}).
           success(function (data, status, headers, config) {
-            fn({data: data.data});
+            fn(data.data);
           }).
           error(function (data, status, headers, config) {
             console.log("Error while using getUsers");
@@ -58,7 +58,7 @@ angular.module('myApp.services', []).
       setUsers: function (users, fn) {
         $http.post('/api/setUsers', {params: {users:users}}).
           success(function (data, status, headers, config) {
-            fn({data: data.data});
+            fn(data.data);
           }).
           error(function (data, status, headers, config) {
             console.log("Error while using setUsers");

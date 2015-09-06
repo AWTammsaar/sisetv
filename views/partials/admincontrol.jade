@@ -2,9 +2,13 @@
 div(ng-controller="AdminCtrl as adminctrl")
    .row(ng-repeat="user in adminctrl.slidegroup")
       .col-lg-12
-         .panel.panel-default
+         .panel.panel-default(ng-if="user.registered==false")
+            .panel-heading
+               b {{user.displayName}} (pending)
+
+         .panel.panel-default(ng-if="user.registered==true")
             .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.name)")
-               b {{user.name}}
+               b {{user.displayName}}
                //.col-lg-3.col-lg-offset-5.btn-group(role="group")
                   button.btn.btn-default(type="button" ng-click="")
                      span.glyphicon.glyphicon-arrow-up
@@ -12,18 +16,18 @@ div(ng-controller="AdminCtrl as adminctrl")
                      span.glyphicon.glyphicon-arrow-down
             .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.name]")
                .user-panel-content
-                  | Some collection of tools about the user in question
+                  | Delete user?
                table.table.table-striped.table-responsive.screen-table
                   thead
                      tr.table-title
                         th.col-sm-1 Type
                         th.col-sm-3 File
                         th.col-sm-3 Duration
-                        th.col-sm-4 Transition
+                        th.col-sm-4 Tools
                   tbody
                      tr(ng-repeat="file in user.files" ng-class="{'grayed': file.hidden}")
                         //Standard rows
                         td {{file.type}}
                         td {{file.name}}
                         td {{file.duration}} seconds
-                        td {{file.transition}} {{file.transitionTime}} seconds
+                        td Hide/Show Delete
