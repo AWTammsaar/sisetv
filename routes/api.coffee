@@ -53,7 +53,7 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     return res.fail 'No duration provided!'
   user = req.user.data.username
   data =
-    duration: req.body.duration
+    duration: parseInt req.body.duration
   data.fileName = req.file.originalname
   data.filePath = req.file.path
   if req.body.user
