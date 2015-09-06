@@ -20,13 +20,6 @@
   app.controller("AppCtrl", function AppCtrl($scope, $http) {
     //operation initiated when controller is constructed
     var appctrl = this;
-    $http({method: 'GET', url: '/api/name'}).
-      success(function (data, status, headers, config) {
-        appctrl.name = data.data;
-      }).
-      error(function (data, status, headers, config) {
-        appctrl.name = 'Error!'
-      });
   });
 
   app.controller("ContentCtrl", function ContentCtrl($scope, $http, apiService) {
