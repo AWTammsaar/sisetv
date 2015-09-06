@@ -42,9 +42,16 @@ router.use (req, res, next) ->
   else
     next()
 
-router.get '/logout', (req, res) ->
-  req.logout()
-  res.redirect '/login'
+router.get '/register/:id', (req, res) ->
+  if req.user
+    return res.redirect '/admin'
+  for u in users.getUsers()
+    if !u.data.registered and u.data.registerID == req.params.id
+      return res.render 'signup',
+        error: req.flash 'error'
+        displayName: u.data.displayName
+        registerId: req.params.id
+  res.redirect '/admin'
 
 router.get '/admin', (req, res) ->
   if req.user

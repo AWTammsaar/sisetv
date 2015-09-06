@@ -68,6 +68,10 @@ router.use (req, res, next) ->
   else
     next()
 
+router.get '/logout', (req, res) ->
+  req.logout()
+  res.redirect '/login'
+
 router.get "/getUser", (req, res) ->
   res.respond req.user
 
@@ -141,7 +145,7 @@ router.use (req, res, next) ->
   else
     next()
 
-router.get '/createRegisterLink', (req, res) ->
+router.post '/createRegisterLink', (req, res) ->
   if !req.body.displayName
     res.fail 'No display name given!'
 
