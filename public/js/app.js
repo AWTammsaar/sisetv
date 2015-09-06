@@ -5,13 +5,12 @@
 
 (function () {
   var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute']);
-
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/admin/admin', {
-      templateUrl: 'partials/admin',
+      templateUrl: 'partials/admin'
     });
     $routeProvider.when('/admin/cc', {
-      templateUrl: 'partials/cc',
+      templateUrl: 'partials/cc'
     });
     $routeProvider.otherwise({redirectTo: '/admin/cc'});
     $locationProvider.html5Mode(true);
@@ -25,6 +24,7 @@
   app.controller("ContentCtrl", function ContentCtrl($scope, $http, apiService) {
     //operation initiated when controller is constructed
     var contentCtrl = this;
+    contentCtrl.files= {};
     contentCtrl.swap = function (id, direction) {
       var targetid = id + direction;
       if (this.files.length > targetid && targetid >= 0) {
@@ -39,7 +39,11 @@
 
     contentCtrl.toggleVisible = function (id) {
       contentCtrl.files[id].hidden = !contentCtrl.files[id].hidden;
-      apiService.setSlides(contentCtrl.files)
+      apiService.setSlides(contentCtrl.files, function(data){
+        console.log(data);
+        contentCtrl.files = data;
+        contentCtrl.reOrderFrom(0);
+      })
     };
 
     contentCtrl.deleteFile = function (id) {
@@ -55,7 +59,6 @@
         contentCtrl.files[i].id = i;
       }
     };
-
 
     // Initialize slide data
     apiService.getUser(function(data){
@@ -79,7 +82,12 @@
 
     adminctrl.slidegroup = [
       {
-        name: "ASD",
+        displayName: "ASD",
+        registered: false
+      },
+      {
+        displayName: "Otherperson",
+        registered: true,
         files: [
           {
             id: 0,
@@ -111,7 +119,8 @@
         ]
       },
       {
-        name: "Otherperson",
+        displayName: "Thingly",
+        registered: true,
         files: [
           {
             id: 0,
@@ -143,39 +152,8 @@
         ]
       },
       {
-        name: "Thingly",
-        files: [
-          {
-            id: 0,
-            type: "Image",
-            name: "cute_kitten.jpeg",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: true
-          },
-          {
-            id: 1,
-            type: "Video",
-            name: "fox_on_trampoline.wmv",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: false
-          },
-          {
-            id: 2,
-            type: "HTML",
-            name: "cool_thing.html",
-            duration: 15,
-            transition: "Slide right",
-            transitionTime: 0.3,
-            hidden: false
-          }
-        ]
-      },
-      {
-        name: "Nais",
+        displayName: "Nais",
+        registered: true,
         files: [
           {
             id: 0,
