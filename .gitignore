@@ -32,3 +32,4 @@ node_modules
 dist
 sessions
 persist
+public/content
