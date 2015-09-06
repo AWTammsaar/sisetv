@@ -106,7 +106,7 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
       fs.unlink req.file.path
       req.flash 'error', 'Could not find user!'
       return res.redirect '/admin'
-    if user.data.slides.length >= user.data.maxSlides
+    if !user.data.admin and user.data.slides.length >= user.data.maxSlides
       req.flash 'error', 'Slide limit reached!'
       return res.redirect '/admin'
     user.addSlide data, (err) ->
