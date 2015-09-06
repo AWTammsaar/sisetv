@@ -39,9 +39,9 @@ div(ng-controller="AdminCtrl as adminctrl")
                         th.col-sm-3 Duration
                         th.col-sm-4 Tools
                   tbody
-                     tr(ng-repeat="file in user.files" ng-class="{'grayed': file.hidden}")
+                     tr(ng-repeat="slide in user.slides" ng-class="{'grayed': slide.hidden}")
                         //Standard rows
-                        td {{file.type}}
-                        td {{file.name}}
-                        td {{file.duration}} seconds
+                        td {{slide.type}}
+                        td {{slide.name}}
+                        td {{slide.duration}} seconds
                         td Hide/Show Delete
