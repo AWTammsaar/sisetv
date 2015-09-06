@@ -7,4 +7,4 @@ module.exports =
     defaultDelay: 3
     defaultDuration: 0.5
     defaultTransition: "none"
-    checkCycles: 20
+    checkCycles: 2
