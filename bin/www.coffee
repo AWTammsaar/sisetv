@@ -66,7 +66,8 @@ onListening = () ->
 server.listen port
 server.on 'error', onError
 server.on 'listening', onListening
-
+storage = require 'node-persist'
+storage.initSync()
 bind = if typeof port == 'string' then "Pipe #{port}" else "Port #{port}"
 
 getIP (err, ip) ->
@@ -76,8 +77,10 @@ getIP (err, ip) ->
   else
     console.log chalk.cyan 'SiseTV is now running'
   app.set 'ip', ip
-  console.log chalk.cyan "Visit #{chalk.magenta 'http://' + ip + ':' + (app.get 'port') + '/admin'} for the administration interface"
-  console.log chalk.cyan "Point the browsers on your information display computers to #{chalk.magenta 'http://' + ip + ':' + (app.get 'port')}"
+  url = 'http://' + ip + ':' + (app.get 'port')
+  storage.setItemSync 'url', url
+  console.log chalk.cyan "Visit #{chalk.magenta url + '/admin'} for the administration interface"
+  console.log chalk.cyan "Point the browsers on your information display computers to #{url}"
 
 
 

@@ -8,6 +8,15 @@ users = require '../users'
 config = require '../config'
 Slide = require '../slide'
 fs = require 'fs'
+bcrypt = require 'bcrypt-nodejs'
+
+randomString = (len, charSet) ->
+  charSet = charSet or 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  randomString = ''
+  for i in [0..len]
+    randomPoz = Math.floor Math.random() * charSet.length
+    randomString += charSet.substring randomPoz,randomPoz+1
+  return randomString
 
 router.use (req, res, next) ->
   res.respond = (data) ->
@@ -33,6 +42,25 @@ router.get "/getContent", (req, res) ->
 router.get "/getConfig", (req, res) ->
   res.json config.getConfig()
 
+router.post "/registerUser", (req, res) ->
+  if !req.body.registerLink
+    req.flash 'error', 'No register link ID!'
+    return res.redirect '/login'
+
+  if !req.body.username or !req.body.password
+    req.flash 'error', 'No username or password!'
+    return res.redirect '/login'
+
+  for u in users.getUsers()
+    if !u.data.registered and u.data.registerLink == req.body.registerLink
+      u.data.username = req.body.username
+      u.data.password = bcrypt.hashSync req.body.password
+      u.data.registered = true
+      req.login u
+      return res.redirect '/admin/index'
+  req.flash 'error', 'Invalid register link ID!'
+  res.redirect '/login'
+
 router.use (req, res, next) ->
   if !req.user
     req.flash "error", "You need to be logged in to perform this action!"
@@ -41,7 +69,7 @@ router.use (req, res, next) ->
     next()
 
 router.get "/getUser", (req, res) ->
-  res.respond _.omit req.user, 'password'
+  res.respond req.user
 
 router.post '/setSlides', (req, res) ->
   req.user.slides = req.body.slides
@@ -50,7 +78,11 @@ router.post '/setSlides', (req, res) ->
 router.post '/addSlide', upload.single('file'), (req, res) ->
   if !req.body.duration
     fs.unlink req.file.path
-    return res.fail 'No duration provided!'
+    req.flash 'error', 'No duration provided!'
+    return res.redirect '/admin'
+  if !req.file
+    req.flash 'error', 'No file uploaded!'
+    return res.redirect '/admin'
   user = req.user.data.username
   data =
     duration: parseInt req.body.duration
@@ -59,12 +91,17 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
   if req.body.user
     if !req.user.data.admin
       fs.unlink req.file.path
-      return res.fail 'You need to be an admin to perform this action!'
+      req.flash 'error', 'You need to be an admin to perform this action!'
+      return res.redirect '/admin'
     user = req.body.user
   users.getUser user, null, (user) ->
     if !user
       fs.unlink req.file.path
-      return res.respond 'No such user!'
+      req.flash 'error', 'Could not find user!'
+      return res.redirect '/admin'
+    if user.data.slides.length >= user.data.maxSlides
+      req.flash 'error', 'Slide limit reached!'
+      return res.redirect '/admin'
     user.addSlide data, (err) ->
       if err
         req.flash 'error', err
@@ -92,6 +129,10 @@ router.post '/deleteSlide', (req, res) ->
       users.save()
       res.respond user.data.slides
 
+
+###
+  ADMIN ONLY
+###
 router.use (req, res, next) ->
   if !req.user.data.admin
     req.flash "error", "You need to be an admin to perform this action!"
@@ -99,18 +140,28 @@ router.use (req, res, next) ->
   else
     next()
 
+router.get '/createRegisterLink', (req, res) ->
+  if !req.body.displayName
+    res.fail 'No display name given!'
+
+  code = randomString(30)
+  users.createUser { displayName: req.body.displayName, registerLink: code },
+    user ->
+      res.respond users.getUsers()
+
+
 router.get '/getUsers', (req, res) ->
-  res.respond users.getUsers().map (u) -> _.omit u, 'password'
+  res.respond users.getUsers()
 
 router.post '/setUsers', (req, res) ->
-  users.setUsers(req.body.users)
-  res.respond users.getUsers().map (u) -> _.omit u, 'password'
+  users.setUsers(req.body.users.map (u) -> new User u)
+  res.respond users.getUsers()
 
 router.post '/addUser', (req, res) ->
   if !req.body.username or !req.body.password
     return res.fail 'Missing username or password!'
   users.createUser req.body, () ->
-    res.respond users.getUsers().map (u) -> _.omit u, 'password'
+    res.respond users.getUsers()
 
 router.post '/deleteUser', (req, res) ->
   if !req.body.id
@@ -122,6 +173,6 @@ router.post '/deleteUser', (req, res) ->
     return res.fail 'The admin account cannot be deleted!'
   userList.splice req.body.id
   users.save () ->
-    res.respond users.getUsers().map (u) -> _.omit u, 'password'
+    res.respond users.getUsers()
 
 module.exports = router

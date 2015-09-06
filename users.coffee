@@ -21,7 +21,7 @@ exp =
     user = new User options
 
     users.push user
-    @save -> cb users
+    @save -> cb user
 
   getUsers: ->
     return users
@@ -35,7 +35,7 @@ exp =
 
 chalk.enabled = true
 if users.length == 0
-  exp.createUser {username: 'admin', password: 'admin', needsReset: true, admin: true, displayName: "Admin"}, () ->
+  exp.createUser {username: 'admin', password: 'admin', needsReset: true, admin: true, displayName: "Admin", registered: true}, () ->
     console.log chalk.yellow "No users found, so I've created a new administrator user:"
     console.log chalk.cyan "\tUsername: admin"
     console.log chalk.cyan "\tPassword: admin"

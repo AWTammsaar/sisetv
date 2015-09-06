@@ -9,6 +9,8 @@ defaults = _.partialRight _.assign, (value, other) ->
 types =
   'img': ['.png', '.jpg', '.gif', '.jpeg']
   'video': ['.mp4', '.webm', '.wmv']
+storage = require 'node-persist'
+storage.initSync()
 class User
   constructor: (data) ->
     if data.slides?
@@ -20,10 +22,18 @@ class User
       needsReset: false
       admin: false
       displayName: ""
+      registered: false
+      registerLink: null
+      maxSlides: 5
     }, data)
 
   toJSON: ->
-    @data
+    data = _.cloneDeep(@data)
+    if !data.registered
+      url = storage.getItemSync('url') + "/register/" + data.registerLink
+      data.link = url
+    _.omit data, 'password'
+    data
 
   deleteSlide: (id, cb) ->
     if id > 0 and id < @data.slides.length
