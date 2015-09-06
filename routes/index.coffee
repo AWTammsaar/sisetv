@@ -7,7 +7,7 @@ router.get '/resetPassword', (req, res) ->
     return res.redirect "/"
   res.render 'resetpassword',
     error: req.flash 'error'
-    username: req.user.data.username
+    user: req.user.data.username
 
 router.use (req, res, next) ->
   if req.user and req.user.data.needsReset
