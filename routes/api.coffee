@@ -69,7 +69,6 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
         res.redirect '/admin/admin'
       users.save()
 
-
 router.post '/deleteSlide', (req, res) ->
   if !req.body.id
     return res.fail 'No slide ID provided!'
