@@ -7,13 +7,14 @@ upload = multer dest: 'temp/'
 users = require '../users'
 config = require '../config'
 Slide = require '../slide'
+fs = require 'fs'
 
 router.use (req, res, next) ->
   res.respond = (data) ->
     res.json data: data
   res.fail = (msg) ->
     res.json error: msg
-    res.statusCode 400
+    res.status 400
   next()
 
 
@@ -47,23 +48,28 @@ router.post '/setSlides', (req, res) ->
   res.respond req.user.slides
 
 router.post '/addSlide', upload.single('file'), (req, res) ->
-  if !req.body.data
-    return res.fail 'No slide data provided!'
+  if !req.body.duration
+    fs.unlink req.file.path
+    return res.fail 'No duration provided!'
   user = req.user.data.username
-  data = req.body.data
+  data =
+    duration: req.body.duration
   data.fileName = req.file.originalname
   data.filePath = req.file.path
   if req.body.user
     if !req.user.data.admin
+      fs.unlink req.file.path
       return res.fail 'You need to be an admin to perform this action!'
     user = req.body.user
   users.getUser user, null, (user) ->
     if !user
+      fs.unlink req.file.path
       return res.respond 'No such user!'
     user.addSlide data, (err) ->
       if err
         req.flash 'error', err
-      if user == req.body.user
+        fs.unlink req.file.path
+      if user == req.user
         res.redirect '/admin/cc'
       else
         res.redirect '/admin/admin'

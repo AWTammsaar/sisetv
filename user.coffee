@@ -33,18 +33,19 @@ class User
   addSlide: (data, cb) ->
     name = data.fileName
     i = 1
-    while fs.existsSync uploadDir
+    ext = name.slice(name.lastIndexOf('.'))
+    while fs.existsSync path.join uploadDir, name
       name = data.fileName.slice(0,
           data.fileName.lastIndexOf('.')) + "_" + i + ext
 
-    ext = name.slice(data.fileName.lastIndexOf('.'))
-    for type, exts in types
+    data.name = name
+    for type, exts of types
       if exts.indexOf(ext) != -1
         fs.renameSync data.filePath, path.join uploadDir, name
         data.type = type
         @data.slides.push(new Slide data)
         return cb null
-    cb 'Invalid file type'
+    cb 'Invalid file type ' + ext
 
 
 module.exports = User
