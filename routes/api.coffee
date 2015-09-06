@@ -70,7 +70,7 @@ router.use (req, res, next) ->
 
 router.get '/logout', (req, res) ->
   req.logout()
-  res.redirect '/login'
+  res.redirect '/admin'
 
 router.get "/getUser", (req, res) ->
   res.respond req.user
