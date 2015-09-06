@@ -52,8 +52,7 @@ loaders.video = {
     var jqel = $('<video />').attr("src", c.url).attr("preload", "auto").attr("muted", true);
     var elem = jqel.get(0);
     elem.addEventListener('loadedmetadata', function () {
-      if (!c.delay)
-        c.delay = elem.duration;
+      c.delay = elem.duration;
     });
     return jqel;
   },
@@ -81,8 +80,8 @@ loaders.video = {
 var transitions = {};
 transitions.none = {
   transition: function (elemIn, elemOut, duration, completed) {
-    elemIn.removeClass("hidden");
     elemOut.addClass("hidden");
+    elemIn.removeClass("hidden");
     completed();
   }
 };

@@ -36,14 +36,14 @@ router.get "/getContent", (req, res) ->
       content.push
         url: "content/#{slide.data.name}"
         type: slide.data.type
-        duration: slide.data.duration
+        delay: slide.data.duration
   res.json content
 
 router.get "/getConfig", (req, res) ->
   res.json config.getConfig()
 
 router.post "/registerUser", (req, res) ->
-  if !req.body.registerLink
+  if !req.body.registerID
     req.flash 'error', 'No register link ID!'
     return res.redirect '/login'
 
@@ -52,7 +52,7 @@ router.post "/registerUser", (req, res) ->
     return res.redirect '/login'
 
   for u in users.getUsers()
-    if !u.data.registered and u.data.registerLink == req.body.registerLink
+    if !u.data.registered and u.data.registerID == req.body.registerID
       u.data.username = req.body.username
       u.data.password = bcrypt.hashSync req.body.password
       u.data.registered = true
@@ -72,12 +72,13 @@ router.get "/getUser", (req, res) ->
   res.respond req.user
 
 router.post '/setSlides', (req, res) ->
-  req.user.slides = req.body.slides
-  res.respond req.user.slides
+  req.user.data.slides = req.body.slides.map (s) -> new Slide s
+  users.save () ->
+    res.respond req.user.data.slides
 
 router.post '/addSlide', upload.single('file'), (req, res) ->
   if !req.body.duration
-    fs.unlink req.file.path
+    fs.unlink req.file.path if req.file
     req.flash 'error', 'No duration provided!'
     return res.redirect '/admin'
   if !req.file
@@ -105,11 +106,11 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     user.addSlide data, (err) ->
       if err
         req.flash 'error', err
-        fs.unlink req.file.path
       if user == req.user
         res.redirect '/admin/cc'
       else
         res.redirect '/admin/admin'
+      fs.unlink req.file.path if fs.existsSync path
       users.save()
 
 router.post '/deleteSlide', (req, res) ->
@@ -126,8 +127,8 @@ router.post '/deleteSlide', (req, res) ->
     user.deleteSlide req.body.id, (err) ->
       if err
         return res.fail err
-      users.save()
-      res.respond user.data.slides
+      users.save () ->
+        res.respond user.data.slides
 
 
 ###
@@ -145,7 +146,7 @@ router.get '/createRegisterLink', (req, res) ->
     res.fail 'No display name given!'
 
   code = randomString(30)
-  users.createUser { displayName: req.body.displayName, registerLink: code },
+  users.createUser { displayName: req.body.displayName, registerID: code },
     user ->
       res.respond users.getUsers()
 
@@ -155,7 +156,8 @@ router.get '/getUsers', (req, res) ->
 
 router.post '/setUsers', (req, res) ->
   users.setUsers(req.body.users.map (u) -> new User u)
-  res.respond users.getUsers()
+  users.save () ->
+    res.respond users.getUsers()
 
 router.post '/addUser', (req, res) ->
   if !req.body.username or !req.body.password

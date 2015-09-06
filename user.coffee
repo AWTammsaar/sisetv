@@ -23,16 +23,16 @@ class User
       admin: false
       displayName: ""
       registered: false
-      registerLink: null
+      registerID: null
       maxSlides: 5
     }, data)
 
   toJSON: ->
     data = _.cloneDeep(@data)
     if !data.registered
-      url = storage.getItemSync('url') + "/register/" + data.registerLink
-      data.link = url
-    _.omit data, 'password'
+      url = storage.getItemSync('url') + "/register/" + data.registerID
+      data.registerLink = url
+    data = _.omit data, 'password'
     data.slides = data.slides.map (s) -> s.data
     return data
 
@@ -49,6 +49,7 @@ class User
     while fs.existsSync path.join uploadDir, name
       name = data.fileName.slice(0,
           data.fileName.lastIndexOf('.')) + "_" + i + ext
+      i++
 
     data.name = name
     for type, exts of types

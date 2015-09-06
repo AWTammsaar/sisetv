@@ -5,9 +5,7 @@ GET /getUser
     Gets the currently logged in user
 	returns:
 		{
-			data: {
-				username(String), slides(Array of slides. See below for format), needsReset(true/false), admin(true/false)
-			}
+			data(User object. See below for format)
 		}
 POST /setSlides
 	Sets the user's slides
@@ -88,7 +86,7 @@ POST /createRegisterLink
         displayName: The user's display name.
     returns
         {
-            data (String - link where the user can register themselves)
+            data (Array of current users)
         }
 
 POST /deleteUser
@@ -107,4 +105,15 @@ Slide format:
 		duration: float - Seconds to show the slide for,
 		hidden: true/false - Is slide hidden?
 	}
+User format:
+    {
+        username(String) - The username
+        displayName(String) - The display name
+        slides(Array of slides. See above for format)
+        needsReset(true/false) - Does the user's password need to be reset?
+        admin(true/false) - Is the user an admin
+        registered(true/false) - Is the user registered? False indicates that they should use the registerLink to register themselves.
+        registerID(String) - Registration link identifier
+        registerLink(String) - The actual registration link
+    }
 The API responds with a 400 status code and JSON object { error: (message) }  if there is an error
