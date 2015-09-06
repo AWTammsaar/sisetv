@@ -16,9 +16,13 @@
     $locationProvider.html5Mode(true);
   }]);
 
-  app.controller("AppCtrl", function AppCtrl($scope, $http) {
+  app.controller("AppCtrl", function AppCtrl($scope, $http, logout) {
     //operation initiated when controller is constructed
     var appctrl = this;
+    appctrl.logout = function(){
+      console.log("wat");
+      logout(function(){});
+    }
   });
 
   app.controller("ContentCtrl", function ContentCtrl($scope, $http, apiService) {
