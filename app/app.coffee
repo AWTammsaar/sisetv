@@ -37,7 +37,7 @@ app.set 'view engine', 'jade'
 
 # uncomment after placing your favicon in /public
 # app.use favicon path.join(__dirname, 'public', 'favicon.ico')
-app.use logger 'dev'
+app.use logger 'dev', skip: (req, res) -> res.statusCode < 400
 app.use bodyParser.json()
 app.use bodyParser.urlencoded extended: false
 app.use cookieParser()
