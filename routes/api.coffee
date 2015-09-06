@@ -152,7 +152,7 @@ router.post '/createRegisterLink', (req, res) ->
   code = randomString(30)
   users.createUser { displayName: req.body.displayName, registerID: code },
     user ->
-      res.respond users.getUsers()
+      res.redirect '/admin/admin'
 
 
 router.get '/getUsers', (req, res) ->
