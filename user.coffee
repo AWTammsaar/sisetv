@@ -33,7 +33,8 @@ class User
       url = storage.getItemSync('url') + "/register/" + data.registerLink
       data.link = url
     _.omit data, 'password'
-    data
+    data.slides = data.slides.map (s) -> s.data
+    return data
 
   deleteSlide: (id, cb) ->
     if id > 0 and id < @data.slides.length
