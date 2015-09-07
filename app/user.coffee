@@ -32,7 +32,7 @@ class User
     if !data.registered
       url = storage.getItemSync('url') + "/register/" + data.registerID
       data.registerLink = url
-    data.slides = data.slides.map (s) -> s.data
+    data.slides = data.slides.map (s, i) -> _.assign(s.data, id: i)
     return data
 
   deleteSlide: (id, cb) ->
