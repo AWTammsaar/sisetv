@@ -25,7 +25,7 @@ div(ng-controller="AdminCtrl as adminctrl")
                b {{user.displayName}}
             .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.displayName]")
                .user-panel-content
-                  button.btn.btn-default(type="button" ng-click="adminctrl.deleteUser(user.id)")
+                  button.btn.btn-danger.pull-right(type="button" ng-click="adminctrl.deleteUser(user.id)")
                      |Delete user&nbsp;
                      span.glyphicon.glyphicon-trash
                table.table.table-striped.table-responsive.screen-table
