@@ -19,9 +19,9 @@ block body
         .navbar-text.navbar-right
           a(ng-href="/api/logout" target="_self") Log out
     - if (error!="")
-    .alert.alert-dismissable.alert-danger
-      button(type="button" class="close" data-dismiss="alert") ×
-      p #{error}
+        .alert.alert-dismissable.alert-danger
+          button(type="button" class="close" data-dismiss="alert") ×
+          p #{error}
     div(ng-controller="AppCtrl as app")
       div(ng-view)
   footer(clas="footer")
