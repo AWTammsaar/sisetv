@@ -7,7 +7,7 @@ fs.mkdirSync uploadDir if not fs.existsSync uploadDir
 defaults = _.partialRight _.assign, (value, other) ->
   if not _.isUndefined(value) then other else undefined
 types =
-  'img': ['.png', '.jpg', '.gif', '.jpeg']
+  'img': ['.png', '.jpg', '.gif', '.jpeg', '.bmp']
   'video': ['.mp4', '.webm', '.wmv']
 storage = require 'node-persist'
 storage.initSync()
