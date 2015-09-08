@@ -67,14 +67,14 @@ function getNewestData() {
       var c = content[i];
       var elem = loaders[c.type].preLoad(c);
       var slide = $('<div class="slide"></div>').append(elem);
+      slide.attr("id", "content-" + i);
+      slide.appendTo($(".container"));
       if (i != 0)
         slide.addClass("hidden");
       else {
         if (loaders[c.type].onShown)
           loaders[c.type].onShown(c, elem);
       }
-      slide.attr("id", "content-" + i);
-      slide.appendTo($(".container"));
     }
     if (timeout) setTimeout(nextContent, (content[current].delay ? content[current].delay : config.defaultDelay) * 1000);
   });
