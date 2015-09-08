@@ -69,6 +69,10 @@ function getNewestData() {
       var slide = $('<div class="slide"></div>').append(elem);
       if (i != 0)
         slide.addClass("hidden");
+      else {
+        if (loaders[c.type].onShown)
+          loaders[c.type].onShown(c, elem);
+      }
       slide.attr("id", "content-" + i);
       slide.appendTo($(".container"));
     }
