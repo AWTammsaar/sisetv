@@ -7,16 +7,17 @@ upload = multer dest: 'temp/'
 users = require '../app/users'
 config = require '../app/config'
 Slide = require '../app/slide'
+User = require '../app/user'
 fs = require 'fs'
 bcrypt = require 'bcrypt-nodejs'
 
 randomString = (len, charSet) ->
   charSet = charSet or 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  randomString = ''
+  st = ''
   for i in [0..len]
     randomPoz = Math.floor Math.random() * charSet.length
-    randomString += charSet.substring randomPoz,randomPoz+1
-  return randomString
+    st += charSet.substring randomPoz,randomPoz+1
+  return st
 
 router.use (req, res, next) ->
   res.respond = (data) ->
@@ -70,7 +71,6 @@ router.use (req, res, next) ->
     next()
 
 router.get '/logout', (req, res) ->
-  console.log 'logout'
   req.logout()
   res.redirect '/admin'
 
@@ -91,9 +91,9 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     req.flash 'error', 'No file uploaded!'
     return res.redirect '/admin'
   user = -1
-  for u in users.getUsers()
-    if u == req.user
-      user = u
+  for u,i in users.getUsers()
+    if u.data.username == req.user.data.username
+      user = i
       break
   data =
     duration: parseInt req.body.duration
@@ -127,9 +127,9 @@ router.post '/deleteSlide', (req, res) ->
   if not req.body.id?
     return res.fail 'No slide ID provided!'
   user = -1
-  for u in users.getUsers()
-    if u == req.user
-      user = u
+  for u,i in users.getUsers()
+    if u.data.username == req.user.data.username
+      user = i
       break
   if req.body.user
     if !req.user.data.admin
@@ -157,8 +157,7 @@ router.use (req, res, next) ->
 
 router.post '/createRegisterLink', (req, res) ->
   if !req.body.displayName
-    res.fail 'No display name given!'
-
+    return res.fail 'No display name given!'
   code = randomString(30)
   users.createUser { displayName: req.body.displayName, registerID: code },
     () ->
