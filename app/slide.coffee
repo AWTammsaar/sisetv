@@ -13,6 +13,10 @@ class Slide
       duration: 10
       hidden: false
     }, data)
+    if @data.duration > 30
+      @data.duration = 30
+    if @data.duration < 1
+      @data.duration = 1
 
   toJSON: ->
     @data
