@@ -22,7 +22,7 @@ POST /addSlide
             A slide object without 'name'. The name will be derived from the uploaded file. See below for format.
         user:
             OPTIONAL ADMIN-ONLY
-            If provided, the slide will be added to the user with the provided username instead.
+            If provided, the slide will be added to the user with the specified ID (index in the users array).
     returns
         {
             data(Array of the user's slides)

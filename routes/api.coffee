@@ -90,7 +90,11 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
   if !req.file
     req.flash 'error', 'No file uploaded!'
     return res.redirect '/admin'
-  user = req.user.data.username
+  user = -1
+  for u in users.getUsers()
+    if u == req.user
+      user = u
+      break
   data =
     duration: parseInt req.body.duration
   data.fileName = req.file.originalname
@@ -101,23 +105,27 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
       req.flash 'error', 'You need to be an admin to perform this action!'
       return res.redirect '/admin'
     user = req.body.user
-  users.getUser user, null, (user) ->
-    if !user
-      fs.unlink req.file.path
-      req.flash 'error', 'Could not find user!'
-      return res.redirect '/admin'
-    if !user.data.admin and user.data.slides.length >= user.data.maxSlides
-      req.flash 'error', 'Slide limit reached!'
-      return res.redirect '/admin'
-    user.addSlide data, (err) ->
-      users.save()
-      if err
-        req.flash 'error', err
-      if user == req.user
-        res.redirect '/admin/cc'
-      else
-        res.redirect '/admin/admin'
-      fs.unlink req.file.path if fs.existsSync path
+  if user >= users.getUsers().length or user < 0
+    fs.unlink req.file.path
+    req.flash 'error', 'Unknown user ID'
+    return res.redirect '/admin'
+  user = users.getUsers()[user]
+  if !user
+    fs.unlink req.file.path
+    req.flash 'error', 'Could not find user!'
+    return res.redirect '/admin'
+  if !user.data.admin and user.data.slides.length >= user.data.maxSlides
+    req.flash 'error', 'Slide limit reached!'
+    return res.redirect '/admin'
+  user.addSlide data, (err) ->
+    users.save()
+    if err
+      req.flash 'error', err
+    if user == req.user
+      res.redirect '/admin/cc'
+    else
+      res.redirect '/admin/admin'
+    fs.unlink req.file.path if fs.existsSync path
 
 router.post '/deleteSlide', (req, res) ->
   if not req.body.id?
