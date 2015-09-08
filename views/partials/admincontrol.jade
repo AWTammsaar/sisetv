@@ -1,50 +1,50 @@
 // Created by AlWilliam on 7/18/2015.
 div(ng-controller="AdminCtrl as adminctrl")
-   .row.col.lg-12.panel.panel-default.new-user-panel
-         .panel-heading
-            | &nbsp;
-            .col-lg-2
-               |New user:
-            .col-lg-6.new-user-form
-               form(method='POST' action='/api/createRegisterLink')
-                  .input-group.input-group-sm
-                     input.form-control(type="text" name="displayName" placeholder="user display name")
-                     span.input-group-btn
-                        input.btn.btn-default(type="submit" value="Submit")
-   .row(ng-repeat="user in adminctrl.slidegroup")
-      .col-lg-12
-         .panel.panel-default(ng-if="user.registered==false")
-            .panel-heading
-               b {{user.displayName}} (pending)&nbsp;&nbsp;
-               | Send this URL to user:&nbsp;
-               span.well.well-sm.link-space(select-on-click)
-                  | {{user.registerLink}}
+  .row.col.lg-12.panel.panel-default.new-user-panel
+    .panel-heading
+      | &nbsp;
+      .col-lg-2
+        | New user:
+      .col-lg-6.new-user-form
+        form(method='POST' action='/api/createRegisterLink')
+          .input-group.input-group-sm
+            input.form-control(type="text" name="displayName" placeholder="user display name")
+            span.input-group-btn
+              input.btn.btn-default(type="submit" value="Submit")
+  .row(ng-repeat="user in adminctrl.slidegroup")
+    .col-lg-12
+      .panel.panel-default(ng-if="user.registered==false")
+        .panel-heading
+          b {{user.displayName}} (pending)&nbsp;&nbsp;
+          | Send this URL to user:&nbsp;
+          span.well.well-sm.link-space(select-on-click)
+            | {{user.registerLink}}
 
-         .panel.panel-default(ng-if="user.registered==true")
-            .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.displayName)")
-               b {{user.displayName}}
-            .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.displayName]")
-               .user-panel-content
-                  button.btn.btn-danger.pull-right(type="button" ng-click="adminctrl.deleteUser(user.id)")
-                     |Delete user&nbsp;
-                     span.glyphicon.glyphicon-trash
-               table.table.table-striped.table-responsive.screen-table
-                  thead
-                     tr.table-title
-                        th.col-sm-1 Type
-                        th.col-sm-3 File
-                        th.col-sm-3 Duration
-                        th.col-sm-4 Tools
-                  tbody
-                     tr(ng-repeat="slide in user.slides" ng-class="{'grayed': slide.hidden}")
-                        //Standard rows
-                        td {{slide.type}}
-                        td {{slide.name}}
-                        td {{slide.duration}} seconds
-                        td
-                           div.btn-group(role="group")
-                              button.btn.btn-default(type="button" ng-click="adminctrl.toggleSlide(user.id,slide.id)" ng-class="{'active': slide.hidden}")
-                                 span.glyphicon.glyphicon-eye-open(ng-if="!slide.hidden")
-                                 span.glyphicon.glyphicon-eye-close(ng-if="slide.hidden")
-                              button.btn.btn-default(type="button" ng-click="adminctrl.deleteSlide(user.id,slide.id)")
-                                 span.glyphicon.glyphicon-trash
+      .panel.panel-default(ng-if="user.registered==true")
+        .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.displayName)")
+          b {{user.displayName}}
+        .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.displayName]")
+          .user-panel-content
+            button.btn.btn-danger.pull-right(type="button" ng-click="adminctrl.deleteUser(user.id)")
+              | Delete user&nbsp;
+              span.glyphicon.glyphicon-trash
+          table.table.table-striped.table-responsive.screen-table
+            thead
+              tr.table-title
+                th.col-sm-1 Type
+                th.col-sm-3 File
+                th.col-sm-3 Duration
+                th.col-sm-4 Tools
+            tbody
+              tr(ng-repeat="slide in user.slides" ng-class="{'grayed': slide.hidden}")
+                //Standard rows
+                td {{slide.type}}
+                td {{slide.name}}
+                td {{slide.duration}} seconds
+                td
+                  div.btn-group(role="group")
+                    button.btn.btn-default(type="button" ng-click="adminctrl.toggleSlide(user.id,slide.id)" ng-class="{'active': slide.hidden}")
+                      span.glyphicon.glyphicon-eye-open(ng-if="!slide.hidden")
+                      span.glyphicon.glyphicon-eye-close(ng-if="slide.hidden")
+                    button.btn.btn-default(type="button" ng-click="adminctrl.deleteSlide(user.id,slide.id)")
+                      span.glyphicon.glyphicon-trash
