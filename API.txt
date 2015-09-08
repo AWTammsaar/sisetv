@@ -35,7 +35,7 @@ POST /deleteSlide
             The ID of the slide (index in the user's slides array)
         user:
             OPTIONAL ADMIN-ONLY
-            If provided, the slide will be deleted from the user with the provided username instead.
+            If provided, the slide will be deleted from the user with the specified ID (index in the users array).
     returns
         {
             data(Array of the user's slides)
