@@ -20,8 +20,9 @@
                            span.glyphicon.glyphicon-arrow-up
                         button.btn.btn-default(type="button" ng-click="content.swap(file.id,1)")
                            span.glyphicon.glyphicon-arrow-down
-                        button.btn.btn-default(type="button")
-                           span.glyphicon.glyphicon-edit
+                        //
+                           button.btn.btn-default(type="button")
+                              span.glyphicon.glyphicon-edit
                         button.btn.btn-default(type="button" ng-click="content.toggleVisible(file.id)" ng-class="{'active': file.hidden}")
                            span.glyphicon.glyphicon-eye-open(ng-if="!file.hidden")
                            span.glyphicon.glyphicon-eye-close(ng-if="file.hidden")
