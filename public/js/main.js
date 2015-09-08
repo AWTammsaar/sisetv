@@ -73,7 +73,7 @@ function getNewestData() {
         slide.addClass("hidden");
       else {
         if (loaders[c.type].onShown)
-          loaders[c.type].onShown(c, elem);
+          loaders[c.type].onShown(c, slide);
       }
     }
     if (timeout) setTimeout(nextContent, (content[current].delay ? content[current].delay : config.defaultDelay) * 1000);
