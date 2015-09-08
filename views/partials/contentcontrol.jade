@@ -32,8 +32,10 @@
             //The "New" row
             td New
             td
-              button.btn.btn-default.btn-file Select file
-                input(type="file" name="file")
+              button.btn.btn-default.btn-file(ng-class = "content.upload.style")
+                div(ng-hide=content.upload.hasFile) Select file
+                div(ng-hide=content.upload.hasFile) {{content.upload.filename}}
+                input(type="file" name="file" custom-on-change="uploadFile")
             td
               .input-group
                 input.form-control(name="duration" placeholder="duration" type="number")

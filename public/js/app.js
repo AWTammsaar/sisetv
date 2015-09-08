@@ -30,6 +30,14 @@
     //operation initiated when controller is constructed
     var contentCtrl = this;
     contentCtrl.files = {};
+
+    contentCtrl.upload = {hasFile: false, filename: "none"};
+    $scope.uploadFile = function () {
+      var filename = event.target.files[0].name;
+      contentCtrl.upload = {hasFile: true, filename: filename, style: "btn-success btn-file-success"};
+      $scope.$digest();
+    };
+
     contentCtrl.swap = function (id, direction) {
       var targetid = id + direction;
       if (this.files.length > targetid && targetid >= 0) {
