@@ -33,8 +33,8 @@
             td New
             td
               button.btn.btn-default.btn-file(ng-class = "content.upload.style")
-                div(ng-hide=content.upload.hasFile) Select file
-                div(ng-hide=content.upload.hasFile) {{content.upload.filename}}
+                div(ng-hide="content.upload.hasFile") Select file
+                div(ng-show="content.upload.hasFile") {{content.upload.filename}}
                 input(type="file" name="file" custom-on-change="uploadFile")
             td
               .input-group
