@@ -23,14 +23,11 @@ div(ng-controller="AdminCtrl as adminctrl")
          .panel.panel-default(ng-if="user.registered==true")
             .panel-heading.user-panel-hidden(ng-click="adminctrl.toggle(user.displayName)")
                b {{user.displayName}}
-               //.col-lg-3.col-lg-offset-5.btn-group(role="group")
-                  button.btn.btn-default(type="button" ng-click="")
-                     span.glyphicon.glyphicon-arrow-up
-                  button.btn.btn-default(type="button" ng-click="")
-                     span.glyphicon.glyphicon-arrow-down
             .panel-body.user-panel-body(ng-show="adminctrl.toggled[user.displayName]")
                .user-panel-content
-                  | Delete user?
+                  button.btn.btn-default(type="button" ng-click="adminctrl.deleteUser(user.id)")
+                     |Delete user&nbsp;
+                     span.glyphicon.glyphicon-trash
                table.table.table-striped.table-responsive.screen-table
                   thead
                      tr.table-title
@@ -44,4 +41,10 @@ div(ng-controller="AdminCtrl as adminctrl")
                         td {{slide.type}}
                         td {{slide.name}}
                         td {{slide.duration}} seconds
-                        td Hide/Show Delete
+                        td
+                           div.btn-group(role="group")
+                              button.btn.btn-default(type="button" ng-click="adminctrl.toggleSlide(user.id,slide.id)" ng-class="{'active': slide.hidden}")
+                                 span.glyphicon.glyphicon-eye-open(ng-if="!slide.hidden")
+                                 span.glyphicon.glyphicon-eye-close(ng-if="slide.hidden")
+                              button.btn.btn-default(type="button" ng-click="adminctrl.deleteSlide(user.id,slide.id)")
+                                 span.glyphicon.glyphicon-trash

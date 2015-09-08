@@ -5,6 +5,7 @@
 
 (function () {
   var app = angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'ngRoute']);
+
   app.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
     $routeProvider.when('/admin/admin', {
       templateUrl: 'partials/admin'
@@ -72,7 +73,7 @@
 
   });
 
-  app.controller("AdminCtrl", function AdminCtrl($scope, $http, apiService) {
+  app.controller("AdminCtrl", function AdminCtrl($scope, $http, adminService) {
     //operation initiated when controller is constructed
     var adminctrl = this;
     adminctrl.toggled = {};
@@ -80,118 +81,38 @@
       adminctrl.toggled[target] = !adminctrl.toggled[target];
     };
 
-    adminctrl.slidegroup = [
-      {
-        displayName: "ASD",
-        registered: false,
-        registerLink: "wasdtesting"
-      },
-      {
-        displayName: "Otherperson",
-        registered: true,
-        files: [
-          {
-            id: 0,
-            type: "Image",
-            name: "cute_kitten.jpeg",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: true
-          },
-          {
-            id: 1,
-            type: "Video",
-            name: "fox_on_trampoline.wmv",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: false
-          },
-          {
-            id: 2,
-            type: "HTML",
-            name: "cool_thing.html",
-            duration: 15,
-            transition: "Slide right",
-            transitionTime: 0.3,
-            hidden: false
-          }
-        ]
-      },
-      {
-        displayName: "Thingly",
-        registered: true,
-        files: [
-          {
-            id: 0,
-            type: "Image",
-            name: "cute_kitten.jpeg",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: true
-          },
-          {
-            id: 1,
-            type: "Video",
-            name: "fox_on_trampoline.wmv",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: false
-          },
-          {
-            id: 2,
-            type: "HTML",
-            name: "cool_thing.html",
-            duration: 15,
-            transition: "Slide right",
-            transitionTime: 0.3,
-            hidden: false
-          }
-        ]
-      },
-      {
-        displayName: "Nais",
-        registered: true,
-        files: [
-          {
-            id: 0,
-            type: "Image",
-            name: "cute_kitten.jpeg",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: true
-          },
-          {
-            id: 1,
-            type: "Video",
-            name: "fox_on_trampoline.wmv",
-            duration: 10,
-            transition: "Smooth",
-            transitionTime: 0.5,
-            hidden: false
-          },
-          {
-            id: 2,
-            type: "HTML",
-            name: "cool_thing.html",
-            duration: 15,
-            transition: "Slide right",
-            transitionTime: 0.3,
-            hidden: false
-          }
-        ]
+    adminctrl.orderUsers = function () {
+      // Allows for optimal array indexing.
+      for (var i = 0, l = adminctrl.slidegroup.length; i < l; i++) {
+        adminctrl.slidegroup[i].id = i;
       }
+    };
 
-    ];
+    adminctrl.deleteSlide = function (userid,slideid){
+      adminService.deleteSlide(userid,slideid,function(slides){
+        adminctrl.slidegroup[userid].slides = slides;
+      });
+    };
 
-    apiService.getUsers(function(data){
+    adminctrl.toggleSlide = function(userid,slideid){
+      adminctrl.slidegroup[userid].slides[slideid].hidden = !adminctrl.slidegroup[userid].slides[slideid].hidden;
+      adminService.setUsers(adminctrl.slidegroup,function(){
+        adminctrl.slidegroup=data;
+        adminctrl.orderUsers();
+      });
+    };
+
+    adminctrl.deleteUser = function(userid){
+      adminService.deleteUser(userid,function(data){
+        adminctrl.slidegroup=data;
+        adminctrl.orderUsers();
+      });
+    };
+
+    adminService.getUsers(function(data){
       adminctrl.slidegroup=data;
-    })
+      adminctrl.orderUsers();
+    });
   });
-
 
 })();

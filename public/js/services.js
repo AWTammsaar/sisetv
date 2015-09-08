@@ -44,8 +44,20 @@ angular.module('myApp.services', []).
           error(function (data, status, headers, config) {
             console.log("Error while using deleteSlide");
           });
+      }
+    };
+  }]).
+  service('adminService', ["$http", function ($http) {
+    return {
+      deleteSlide: function (userid, slideid, fn) {
+        $http.post('/api/deleteSlide', {id: slideid, user:userid}).
+          success(function (data, status, headers, config) {
+            fn(data.data);
+          }).
+          error(function (data, status, headers, config) {
+            console.log("Error while using deleteSlide");
+          });
       },
-      // Admin functionality
       getUsers: function (fn) {
         $http.get('/api/getUsers', {}).
           success(function (data, status, headers, config) {
@@ -63,6 +75,15 @@ angular.module('myApp.services', []).
           error(function (data, status, headers, config) {
             console.log("Error while using setUsers");
           });
+      },
+      deleteUser: function (userid, fn) {
+        $http.post('/api/deleteUser', {id: userid}).
+          success(function (data, status, headers, config) {
+            fn(data.data);
+          }).
+          error(function (data, status, headers, config) {
+            console.log("Error while using deleteUser");
+          });
       }
     };
   }]).
@@ -77,4 +98,3 @@ angular.module('myApp.services', []).
         });
     }
   }]);
-;
