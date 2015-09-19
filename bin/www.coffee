@@ -23,8 +23,7 @@ normalizePort = (val) ->
 ###
   Get port from environment and store in Express.
 ###
-
-port = normalizePort process.env.PORT or '3000'
+port = normalizePort (process.argv.length > 2 and process.argv[2]) or process.env.PORT or '3000'
 app.set 'port', port
 
 ###
