@@ -8,18 +8,8 @@ grunt
 ```
 This copies/compiles all the required files into the `dist/` folder.
 
-There is also an additional Grunt task:
-```
-grunt fast
-```
-This does not copy Node.js files. It only recompiles the Coffeescript files.
-
 # Running
-For development, use the following command to start the server:
-```
-coffee bin/www.coffee
-```
-After compiling, you can use `START.cmd` to start the server.
+See the [setup guide](https://github.com/Rezonation/sisetv/wiki/Setup-Guide)
 
 # Usage
 After starting the server, an admin account will be created for you. Navigate to `http://localhost:3000/admin` 
