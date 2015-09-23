@@ -4,8 +4,6 @@ module.exports = (grunt) ->
     clean:
       main:
         ["dist/**/*"]
-      fast:
-        ["dist/{/,routes/,bin/,sourcemap/}*{.js,.js.map}"]
     coffee:
       main:
         files: [
@@ -24,16 +22,9 @@ module.exports = (grunt) ->
           src: ["public/**", "views/**", "package.json", "LICENSE.txt", "!public/content/**"],
           dest: "dist/"
         ]
-      fast:
-        files: [
-          expand: true,
-          src: ["public/**", "views/**", "package.json", "LICENSE.txt", "!public/content/**"],
-          dest: "dist/"
-        ]
 
 
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.registerTask 'default', ['clean:main', 'coffee', 'copy:main']
-  grunt.registerTask 'fast', ['clean:fast', 'coffee', 'copy:fast']
