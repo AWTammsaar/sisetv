@@ -4,6 +4,7 @@ if (typeof loaders === 'undefined' || typeof transitions === 'undefined' || type
   throw new Error("Config is not loaded!");
 }
 var content;
+var lastmodified = 0;
 var current = 0;
 
 var cycles = 0;
@@ -59,7 +60,9 @@ function nextContent() {
 function getNewestData() {
   $.getJSON(config.contentURL, function (data) {
     var timeout = content === undefined;
-    content = data;
+    if (lastmodified == data.lastmodified && content !== undefined) return;
+    content = data.content;
+    lastmodified = data.lastmodified;
     //Preload everything
     $(".container").empty();
     for (var i in content) {

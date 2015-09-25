@@ -10,6 +10,8 @@ Slide = require '../app/slide'
 User = require '../app/user'
 fs = require 'fs'
 bcrypt = require 'bcrypt-nodejs'
+storage = require 'node-persist'
+storage.initSync()
 
 randomString = (len, charSet) ->
   charSet = charSet or 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -29,12 +31,14 @@ router.use (req, res, next) ->
 
 
 router.get "/getContent", (req, res) ->
-  content = []
+  content =
+    content: []
+    lastmodified: storage.getItemSync('lastmodified') or 1
   for user in users.getUsers()
     for slide in user.data.slides
       if slide.data.hidden
         continue
-      content.push
+      content.content.push
         url: "content/#{slide.data.name}"
         type: slide.data.type
         delay: slide.data.duration
@@ -80,6 +84,7 @@ router.get "/getUser", (req, res) ->
 router.post '/setSlides', (req, res) ->
   req.user.data.slides = req.body.slides.map (s) -> new Slide s
   users.save () ->
+    storage.setItemSync('lastmodified', Date.now());
     res.respond req.user.data.slides
 
 router.post '/addSlide', upload.single('file'), (req, res) ->
@@ -115,6 +120,7 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     return res.redirect '/admin'
   user.addSlide data, (err) ->
     users.save()
+    storage.setItemSync('lastmodified', Date.now());
     if err
       req.flash 'error', err
     if user == req.user
@@ -139,6 +145,7 @@ router.post '/deleteSlide', (req, res) ->
   if user >= users.getUsers().length or user < 0
     return res.fail 'Could not find user!'
   user.deleteSlide req.body.id, (err) ->
+    storage.setItemSync('lastmodified', Date.now());
     if err
       return res.fail err
     users.save () ->
