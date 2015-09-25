@@ -54,7 +54,7 @@ class User
 
     data.name = name
     for type, exts of types
-      if exts.indexOf(ext) != -1
+      if exts.indexOf(ext.toLowerCase()) != -1
         fs.renameSync data.filePath, path.join uploadDir, name
         data.type = type
         @data.slides.push(new Slide data)
