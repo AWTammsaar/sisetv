@@ -6,8 +6,7 @@ if (typeof loaders === 'undefined' || typeof transitions === 'undefined' || type
 var content;
 var lastmodified = 0;
 var current = 0;
-
-var cycles = 0;
+var contentBuffer;
 
 function nextContent() {
   var oldContent = content[current];
@@ -17,20 +16,26 @@ function nextContent() {
   //noinspection JSJQueryEfficiency
   var oldElem = $("#content-" + current);
   current += 1;
-  // Fetch new content
+
   if (current >= content.length) {
     current = 0;
-    cycles += 1;
+    //Grab new content from buffer
+    if (contentBuffer) {
+      content = contentBuffer;
+      contentBuffer = undefined;
+      loadContent();
+    }
   }
 
-  if (cycles >= config.checkCycles) {
-    cycles = 0;
-    getNewestData();
-  }
 
   var newContent = content[current];
   //noinspection JSJQueryEfficiency
   var newElem = $("#content-" + current);
+  //We don't currently have any content
+  if (!newContent) {
+    setTimeout(nextContent, 5000);
+    return;
+  }
   var duration = newContent.duration ? newContent.duration : config.defaultDuration;
   duration *= 1000;
 
@@ -57,30 +62,33 @@ function nextContent() {
     setTimeout(nextContent, delay);
   });
 }
-function getNewestData() {
+function getNewestData(cb) {
   $.getJSON(config.contentURL, function (data) {
-    var timeout = content === undefined;
     if (lastmodified == data.lastmodified && content !== undefined) return;
-    content = data.content;
+    //Put new content into buffer
+    contentBuffer = data.content;
     lastmodified = data.lastmodified;
-    //Preload everything
-    $(".container").empty();
-    for (var i in content) {
-      if (!content.hasOwnProperty(i)) continue;
-      var c = content[i];
-      var elem = loaders[c.type].preLoad(c);
-      var slide = $('<div class="slide"></div>').append(elem);
-      slide.attr("id", "content-" + i);
-      slide.appendTo($(".container"));
-      if (i != 0)
-        slide.addClass("hidden");
-      else {
-        if (loaders[c.type].onShown)
-          loaders[c.type].onShown(c, slide);
-      }
-    }
-    if (timeout) setTimeout(nextContent, (content[current].delay ? content[current].delay : config.defaultDelay) * 1000);
+    if (cb) cb();
   });
+}
+
+function loadContent() {
+  var $container = $(".container");
+  $container.empty();
+  for (var i in content) {
+    if (!content.hasOwnProperty(i)) continue;
+    var c = content[i];
+    var elem = loaders[c.type].preLoad(c);
+    var slide = $('<div class="slide"></div>').append(elem);
+    slide.attr("id", "content-" + i);
+    slide.appendTo($container);
+    if (i != 0)
+      slide.addClass("hidden");
+    else {
+      if (loaders[c.type].onShown)
+        loaders[c.type].onShown(c, slide);
+    }
+  }
 }
 
 $(function () {
@@ -93,5 +101,11 @@ $(function () {
   $(document).on("active.idleTimer", function () {
     $("body").css("cursor", "");
   });
-  getNewestData();
+  getNewestData(function () {
+    content = contentBuffer;
+    contentBuffer = undefined;
+    loadContent();
+    nextContent();
+  });
+  setInterval(getNewestData, 10000);
 });
