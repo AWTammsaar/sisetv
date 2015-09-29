@@ -89,9 +89,7 @@ router.post '/setSlides', (req, res) ->
 
 router.post '/addSlide', upload.single('file'), (req, res) ->
   if !req.body.duration
-    fs.unlink req.file.path if req.file
-    req.flash 'error', 'No duration provided!'
-    return res.redirect '/admin'
+    req.body.duration = 10
   if !req.file
     req.flash 'error', 'No file uploaded!'
     return res.redirect '/admin'
