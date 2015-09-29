@@ -73,11 +73,12 @@
       }
     };
 
-    // Initialize slide data
+    // Initialize data
     apiService.getUser(function (data) {
       contentCtrl.files = data.slides;
       contentCtrl.reOrderFrom(0);
     });
+    contentCtrl.showExtensions=false;
 
   });
 

@@ -42,7 +42,8 @@ div(ng-controller="AdminCtrl as adminctrl")
                 //Standard rows
                 td {{slide.type}}
                 td {{slide.name}}
-                td {{slide.duration}} seconds
+                td(ng-if="slide.type!='video'") {{slide.duration}} seconds
+                td(ng-if="slide.type=='video'") Duration of Video
                 td
                   div.btn-group(role="group")
                     button.btn.btn-default(type="button" ng-click="adminctrl.toggleSlide(user.id,slide.id)" ng-class="{'active': slide.hidden}")

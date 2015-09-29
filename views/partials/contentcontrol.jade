@@ -13,7 +13,8 @@
             //Standard rows
             td {{file.type}}
             td {{file.name}}
-            td {{file.duration}} seconds
+            td(ng-if="file.type!='video'") {{file.duration}} seconds
+            td(ng-if="file.type=='video'") Duration of Video
             td
               div.btn-group(role="group")
                 button.btn.btn-default(type="button" ng-click="content.swap(file.id,-1)")
@@ -43,3 +44,9 @@
             td
               div.btn-group(role="group")
                 input.btn.btn-default(type="submit" value="Submit")
+    a(href="#" ng-click="content.showExtensions=!content.showExtensions") Show allowed file extensions
+    .well.well-sm(ng-show="content.showExtensions")
+      p
+        |Images: .png, .jpg, .gif, .jpeg, .bmp
+      p
+        |Videos: .mp4, .webm

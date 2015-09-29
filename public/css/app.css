@@ -63,3 +63,6 @@ body {
     margin-right: 0;
     margin-left: 0;
 }
+.well.well-sm p:last-child {
+    margin-bottom: 0;
+}
