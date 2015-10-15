@@ -113,9 +113,6 @@ router.post '/addSlide', upload.single('file'), (req, res) ->
     req.flash 'error', 'Could not find user!'
     return res.redirect '/admin'
   user = users.getUsers()[user]
-  if !user.data.admin and user.data.slides.length >= user.data.maxSlides
-    req.flash 'error', 'Slide limit reached!'
-    return res.redirect '/admin'
   user.addSlide data, (err) ->
     users.save()
     storage.setItemSync('lastmodified', Date.now());
